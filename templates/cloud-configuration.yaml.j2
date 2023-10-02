@@ -4,7 +4,7 @@ api.port: 1324
 etcd.address: "{{ groups['sedge_Cloud'][0] }}:2379"
 
 cloud: true
-scheduler.policy: default
+scheduler.policy: localonly
 container.pool.memory: 6072
 
 # Disable monitoring

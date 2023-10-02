@@ -1,0 +1,7 @@
+server:
+  hosts:
+    physical_server:
+      ansible_host: 160.80.97.154
+      ansible_connection: ssh
+      ansible_ssh_user: diana
+      ansible_ssh_pass: maryann

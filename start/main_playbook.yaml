@@ -1,0 +1,71 @@
+- name: Copy all directory in remote server
+  hosts: server
+  tasks:
+    - name: Copy files
+      copy:
+        src: ../files
+        dest: ~/serverledge-deploy/
+    - name: Copy group_vars
+      copy:
+        src: ../group_vars
+        dest: ~/serverledge-deploy/
+    - name: Copy jmeter
+      copy:
+        src: ../jmeter
+        dest: ~/serverledge-deploy/
+    - name: Copy roles
+      copy:
+        src: ../roles
+        dest: ~/serverledge-deploy/
+    - name: Copy tasks
+      copy:
+        src: ../tasks
+        dest: ~/serverledge-deploy/
+    - name: Copy templates
+      copy:
+        src: ../templates
+        dest: ~/serverledge-deploy/
+    - name: Copy utils
+      copy:
+        src: ../utils
+        dest: ~/serverledge-deploy/
+    - name: Copy inventory file
+      copy:
+        src: ../inventory
+        dest: ~/serverledge-deploy/
+    - name: Copy ansible.cfg
+      copy:
+        src: ../ansible.cfg
+        dest: ~/serverledge-deploy/ansible.cfg
+    - name: Copy check.yml
+      copy:
+        src: ../check.yml
+        dest: ~/serverledge-deploy/check.yml
+    - name: Copy deploy-serverledge.yml
+      copy:
+        src: ../deploy_serverledge.yml
+        dest: ~/serverledge-deploy/deploy-serverledge.yml
+    - name: Copy run_experiment.yml
+      copy:
+        src: ../run_experiment.yml
+        dest: ~/serverledge-deploy/run_experiment.yml
+    - name: Copy run experiment script
+      copy:
+        src: ../run_users_experiment.sh
+        dest: ~/serverledge-deploy/run_users_experiment.sh
+
+- name: Copy Serverledge binaries in remote server
+  hosts: server
+  tasks:
+    - name: Copy binaries
+      copy:
+        src: ../start/serverledge/bin/
+        dest: ~/serverledge-deploy/roles/serverledge/tasks/files/serverledge-bin
+
+- name: Install the Ansible role to configure Docker
+  hosts: server
+  tasks:
+    - name: install
+      shell: |
+        cd serverledge-deploy
+        ansible-galaxy install geerlingguy.docker
