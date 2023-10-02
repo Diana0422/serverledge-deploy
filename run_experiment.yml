@@ -34,6 +34,15 @@
         state: restarted
       become: yes
 
+- name: Pull Function images from Docker hub
+  hosts:
+    - sedge_Edge
+  tasks:
+    - name: Pull imageClass function image from docker hub
+      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
+    - name: Pull serverledge-python-ffmpeg function image from docker hub
+      ansible.builtin.shell: docker image pull grussorusso/serverledge-python-ffmpeg
+
 - name: Quick benchmark
   hosts: 
     - sedge_Client
@@ -70,7 +79,7 @@
         src: files/sieve.js
         dest: "{{ ansible_env.HOME }}/sieve.js"
 
-    - ansible.builtin.shell: "./serverledge-cli delete -f {{ func_name }}"
+    - ansible.builtin.shell: "./serverledge/serverledge-cli delete -f {{ func_name }}"
       ignore_errors: True
       environment:
         SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
@@ -78,7 +87,7 @@
           #- ansible.builtin.shell: "./serverledge-cli create -f myFunction --memory 128 --cpu 1.0 --src sieve.js --runtime nodejs17ng --handler sieve.js"
           #  environment:
           #    SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
-    - ansible.builtin.shell: "./serverledge-cli create -f {{ func_name }} --memory {{ func_mem }} --cpu {{ func_cpu }} --src {{ func_src }} --runtime {{ func_runtime }} --handler {{ func_handler }}"
+    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name }} --memory {{ func_mem }} --cpu {{ func_cpu }} --src {{ func_src }} --runtime {{ func_runtime }} --handler {{ func_handler }}"
       environment:
         SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
 
