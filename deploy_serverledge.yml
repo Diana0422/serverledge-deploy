@@ -47,12 +47,24 @@
       wipe_etcd: true
 
 
-
-- name: Install ServerlEdge at the Edge
-  hosts: sedge_Edge
+- name: Install ServerlEdge at the Edge 1
+  hosts: sedge_Edge[0]
   vars:
     conf_template: edge-configuration.yaml.j2
+  roles:
+    - serverledge
 
+- name: Install ServerlEdge at the Edge 2
+  hosts: sedge_Edge[1]
+  vars:
+    conf_template: edge2-configuration.yaml.j2
+  roles:
+    - serverledge
+
+- name: Install ServerlEdge at the Edge 3
+  hosts: sedge_Edge[2]
+  vars:
+    conf_template: edge3-configuration.yaml.j2
   roles:
     - serverledge
 
