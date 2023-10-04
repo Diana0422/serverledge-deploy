@@ -34,6 +34,36 @@
         state: restarted
       become: yes
 
+- name: Install and Start InfluxDb
+  hosts:
+    - sedge_Edge
+    - sedge_Cloud
+  tasks:
+    - name: Stop old containers
+      ansible.builtin.shell: docker stop InfluxDb
+      ignore_errors: True
+
+    - name: Start InfluxDb
+      ansible.builtin.shell: docker run -d --rm -p 8086:8086 --name InfluxDb     
+        -e DOCKER_INFLUXDB_INIT_MODE=setup \
+        -e DOCKER_INFLUXDB_INIT_USERNAME=user \
+        -e DOCKER_INFLUXDB_INIT_PASSWORD=password \
+        -e DOCKER_INFLUXDB_INIT_ORG=serverledge \
+        -e DOCKER_INFLUXDB_INIT_BUCKET=completions \
+        -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=serverledge \
+        influxdb
+
+- name: Install and Start Solver
+  hosts:
+    - sedge_Cloud[0]
+  tasks:
+    - name: Stop old containers
+      ansible.builtin.shell: docker stop Solver
+      ignore_errors: True
+
+    - name: Start Solver
+      ansible.builtin.shell: docker run -d -p 2500:2500 --rm --name Solver diana0422/serverledge-solver
+
 - name: Pull Function images from Docker hub
   hosts:
     - sedge_Edge
