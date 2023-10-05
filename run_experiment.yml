@@ -77,13 +77,20 @@
   hosts: 
     - sedge_Client
   vars:
+    # MyFunction1
     func_name: myFunction # must match with the testplan
     func_mem: 128
     func_cpu: 1.0
     func_runtime: nodejs17ng
     func_handler: sieve.js
     func_src: sieve.js
-    testplan: jmeter/testplanClosed.jmx
+
+    # MyFunction2
+    func_name_2: myFunction2
+    func_mem_2: 1000
+    func_cpu_2: 3.0
+
+    testplan: jmeter/testplanClosed2groups.jmx
     users: 3
     local_results_file: results.csv
     local_responses_file: responses.tar.gz
@@ -118,6 +125,18 @@
           #  environment:
           #    SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
     - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name }} --memory {{ func_mem }} --cpu {{ func_cpu }} --src {{ func_src }} --runtime {{ func_runtime }} --handler {{ func_handler }}"
+      environment:
+        SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
+
+    - ansible.builtin.shell: "./serverledge/serverledge-cli delete -f {{ func_name_2 }}"
+      ignore_errors: True
+      environment:
+        SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
+
+          #- ansible.builtin.shell: "./serverledge-cli create -f myFunction --memory 128 --cpu 1.0 --src sieve.js --runtime nodejs17ng --handler sieve.js"
+        #  environment:
+        #    SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
+    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name_2 }} --memory {{ func_mem_2 }} --cpu {{ func_cpu_2 }} --src {{ func_src }} --runtime {{ func_runtime }} --handler {{ func_handler }}"
       environment:
         SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
 

@@ -80,7 +80,7 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="host" elementType="Argument">
               <stringProp name="Argument.name">host</stringProp>
-              <stringProp name="Argument.value">${__P(host,127.0.0.1)}</stringProp>
+              <stringProp name="Argument.value">${__P(host,192.168.122.2)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="path" elementType="Argument">
@@ -90,7 +90,7 @@
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 3}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -261,17 +261,17 @@
           <collectionProp name="Arguments.arguments">
             <elementProp name="host" elementType="Argument">
               <stringProp name="Argument.name">host</stringProp>
-              <stringProp name="Argument.value">${__P(host,127.0.0.1)}</stringProp>
+              <stringProp name="Argument.value">${__P(host,192.168.122.2)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="path" elementType="Argument">
               <stringProp name="Argument.name">path</stringProp>
-              <stringProp name="Argument.value">/invoke/myFunction</stringProp>
+              <stringProp name="Argument.value">/invoke/myFunction2</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 3}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
