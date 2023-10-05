@@ -15,7 +15,7 @@
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <intProp name="LoopController.loops">-1</intProp>
+          <intProp name="LoopController.loops">20</intProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
@@ -34,7 +34,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;Params&quot;: {&quot;n&quot;: 0.070},&#xd;
+	&quot;Params&quot;: {&quot;n&quot;: 12},&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
 }&#xd;
@@ -45,7 +45,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}</stringProp>
           <stringProp name="HTTPSampler.port">1323</stringProp>
-          <stringProp name="HTTPSampler.path">${path}</stringProp>
+          <stringProp name="HTTPSampler.path">${path1}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -84,13 +84,13 @@
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="path" elementType="Argument">
-              <stringProp name="Argument.name">path</stringProp>
-              <stringProp name="Argument.value">/invoke/myFunction</stringProp>
+              <stringProp name="Argument.name">path1</stringProp>
+              <stringProp name="Argument.value">/invoke/Fibonacci</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 3}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -134,7 +134,7 @@
         </ResultCollector>
         <hashTree/>
         <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
-          <stringProp name="FileSaver.filename">jmeterResponse_</stringProp>
+          <stringProp name="FileSaver.filename">jmeterResponse_TG1_</stringProp>
           <boolProp name="FileSaver.errorsonly">false</boolProp>
           <boolProp name="FileSaver.successonly">false</boolProp>
           <boolProp name="FileSaver.skipsuffix">true</boolProp>
@@ -196,7 +196,7 @@
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <intProp name="LoopController.loops">-1</intProp>
+          <intProp name="LoopController.loops">20</intProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
@@ -215,7 +215,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;Params&quot;: {&quot;n&quot;: 12},&#xd;
+	&quot;Params&quot;: {&quot;imgurl&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/6/62/Big_and_little_dog.jpg&quot;},&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
 }&#xd;
@@ -226,7 +226,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}</stringProp>
           <stringProp name="HTTPSampler.port">1323</stringProp>
-          <stringProp name="HTTPSampler.path">${path}</stringProp>
+          <stringProp name="HTTPSampler.path">${path2}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -265,13 +265,13 @@
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="path" elementType="Argument">
-              <stringProp name="Argument.name">path</stringProp>
-              <stringProp name="Argument.value">/invoke/myFunction2</stringProp>
+              <stringProp name="Argument.name">path2</stringProp>
+              <stringProp name="Argument.value">/invoke/ImageClass</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 3}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -315,7 +315,7 @@
         </ResultCollector>
         <hashTree/>
         <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
-          <stringProp name="FileSaver.filename">jmeterResponse_</stringProp>
+          <stringProp name="FileSaver.filename">jmeterResponse_TG2_</stringProp>
           <boolProp name="FileSaver.errorsonly">false</boolProp>
           <boolProp name="FileSaver.successonly">false</boolProp>
           <boolProp name="FileSaver.skipsuffix">true</boolProp>

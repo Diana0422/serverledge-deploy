@@ -77,18 +77,19 @@
   hosts: 
     - sedge_Client
   vars:
-    # MyFunction1
-    func_name: myFunction # must match with the testplan
+    # Fibonacci
+    func_name: Fibonacci # must match with the testplan
     func_mem: 128
     func_cpu: 1.0
-    func_runtime: nodejs17ng
-    func_handler: sieve.js
-    func_src: sieve.js
+    func_runtime: python310
+    func_handler: fibonacci.handler
+    func_src: fibonacci.py
 
-    # MyFunction2
-    func_name_2: myFunction2
-    func_mem_2: 1000
-    func_cpu_2: 3.0
+    # ImageClassification
+    func_name_2: ImageClass
+    func_mem_2: 768
+    func_runtime_2: custom
+    func_image: grussorusso/serverledge-imageclass
 
     testplan: jmeter/testplanClosed2groups.jmx
     users: 3
@@ -116,6 +117,10 @@
         src: files/sieve.js
         dest: "{{ ansible_env.HOME }}/sieve.js"
 
+    - ansible.builtin.copy:
+        src: files/fibonacci.py
+        dest: "{{ ansible_env.HOME }}/fibonacci.py"
+
     - ansible.builtin.shell: "./serverledge/serverledge-cli delete -f {{ func_name }}"
       ignore_errors: True
       environment:
@@ -136,7 +141,7 @@
           #- ansible.builtin.shell: "./serverledge-cli create -f myFunction --memory 128 --cpu 1.0 --src sieve.js --runtime nodejs17ng --handler sieve.js"
         #  environment:
         #    SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
-    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name_2 }} --memory {{ func_mem_2 }} --cpu {{ func_cpu_2 }} --src {{ func_src }} --runtime {{ func_runtime }} --handler {{ func_handler }}"
+    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name_2 }} --memory {{ func_mem_2 }} --runtime {{ func_runtime_2 }} --custom_image {{ func_image }}"
       environment:
         SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
 
