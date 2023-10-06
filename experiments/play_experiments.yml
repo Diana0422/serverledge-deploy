@@ -1,12 +1,12 @@
 ---
-- name: What's in localhost?
-  hosts: localhost
-  connection: local
-  tasks:
-    - shell: ls
-      register: ls
-    - debug: msg={{ ls.stdout }}
-    - debug: var=ls
+#- name: What's in localhost?
+#  hosts: localhost
+#  connection: local
+#  tasks:
+#    - shell: ls
+#      register: ls
+#    - debug: msg={{ ls.stdout }}
+#    - debug: var=ls
 
 - name: Copy Files
   hosts: localhost
