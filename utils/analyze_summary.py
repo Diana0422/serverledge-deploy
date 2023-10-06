@@ -13,7 +13,7 @@ DIR=sys.argv[1] if len(sys.argv) > 1 else "."
 
 
 for entry in os.listdir(DIR):
-    m = re.match("results-(\d+).csv", entry)
+    m = re.match("test_results-(\d+).csv", entry)
     if m is None:
         continue
     users = int(m.groups()[0])

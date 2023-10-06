@@ -93,7 +93,7 @@
 
     testplan: jmeter/testplanClosed2groups.jmx
     users: 3
-    local_results_file: results.csv
+    local_results_file: test_results.csv
     local_responses_file: responses.tar.gz
 
   tasks:
@@ -150,7 +150,7 @@
         src: "{{ testplan }}"
         dest: ./testplan.jmx
 
-    - name: Clean previous results
+    - name: Clean previous test_results
       ansible.builtin.shell: "rm /tmp/jmeter*"
       ignore_errors: True
 
@@ -176,7 +176,7 @@
         format: gz
         remove: yes
 
-    - name: Copy results
+    - name: Copy test_results
       ansible.builtin.fetch: 
         src: /tmp/jmeter_results
         dest: "{{ local_results_file }}"

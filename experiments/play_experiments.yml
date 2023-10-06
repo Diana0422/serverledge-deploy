@@ -1,0 +1,43 @@
+---
+- name: What's in localhost?
+  hosts: localhost
+  connection: local
+  tasks:
+    - shell: ls
+      register: ls
+    - debug: msg={{ ls.stdout }}
+    - debug: var=ls
+
+- name: Copy Files
+  hosts: localhost
+  connection: local
+  tasks:
+    - ansible.builtin.shell: ansible-playbook -i main_inventory.yaml 
+        start/main_playbook.yaml
+
+- name: Deploy Serverledge
+  hosts: server
+  tasks:
+    - ansible.builtin.shell: ansible-playbook -i serverledge-deploy/inventory/default.ini
+        serverledge-deploy/deploy-serverledge.yml
+
+- name: Run experiment with 1 user per thread group
+  hosts: server
+  tasks:
+    - ansible.builtin.shell: ansible-playbook -i serverledge-deploy/inventory/default.ini -vv
+        -e "users= "{{ item }}" "
+        -e "local_results_file=test_result/results.csv"
+        -e "local_responses_file=test_result/responses.tar.gz"
+        -e "local_output_dir=test_result" serverledge-deploy/run_experiment.yml
+      loop:
+        - 1
+
+- name: Transfer test_results on local machine
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: transfer test_results.csv
+      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/results.csv ./test_results
+
+    - name: transfer responses archive
+      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/responses.tar.gz ./test_results

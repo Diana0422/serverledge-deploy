@@ -3,43 +3,43 @@
   tasks:
     - name: Copy files
       copy:
-        src: ../files
+        src: ../../files
         dest: ~/serverledge-deploy/
     - name: Copy group_vars
       copy:
-        src: ../group_vars
+        src: ../../group_vars
         dest: ~/serverledge-deploy/
     - name: Copy jmeter
       copy:
-        src: ../jmeter
+        src: ../../jmeter
         dest: ~/serverledge-deploy/
     - name: Copy roles
       copy:
-        src: ../roles
+        src: ../../roles
         dest: ~/serverledge-deploy/
     - name: Copy tasks
       copy:
-        src: ../tasks
+        src: ../../tasks
         dest: ~/serverledge-deploy/
     - name: Copy templates
       copy:
-        src: ../templates
+        src: ../../templates
         dest: ~/serverledge-deploy/
     - name: Copy utils
       copy:
-        src: ../utils
+        src: ../../utils
         dest: ~/serverledge-deploy/
     - name: Copy inventory file
       copy:
-        src: ../inventory
+        src: ../../inventory
         dest: ~/serverledge-deploy/
     - name: Copy ansible.cfg
       copy:
-        src: ../ansible.cfg
+        src: ../../ansible.cfg
         dest: ~/serverledge-deploy/ansible.cfg
     - name: Copy check.yml
       copy:
-        src: ../check.yml
+        src: ../../check.yml
         dest: ~/serverledge-deploy/check.yml
     - name: Copy deploy-serverledge.yml
       copy:
@@ -59,7 +59,7 @@
   tasks:
     - name: Copy binaries
       copy:
-        src: ../start/serverledge/bin/
+        src: ./serverledge/bin/
         dest: ~/serverledge-deploy/roles/serverledge/tasks/files/serverledge-bin
 
 - name: Install the Ansible role to configure Docker
