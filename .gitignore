@@ -12,3 +12,5 @@ results/
 results*csv
 responses*tar.gz
 serverledge-bin
+
+experiments/main_inventory.yaml
