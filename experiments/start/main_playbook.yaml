@@ -33,6 +33,10 @@
       copy:
         src: ../../inventory
         dest: ~/serverledge-deploy/
+    - name: Copy delay scripts
+      copy:
+        src: ../delay_scripts
+        dest: ~/serverledge-deploy/
     - name: Copy ansible.cfg
       copy:
         src: ../../ansible.cfg
