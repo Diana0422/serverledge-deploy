@@ -26,8 +26,8 @@
   tasks:
     - ansible.builtin.shell: ansible-playbook -i serverledge-deploy/inventory/default.ini -vv
         -e "users= "{{ item }}" "
-        -e "local_results_file=test_result/results.csv"
-        -e "local_responses_file=test_result/responses.tar.gz"
+        -e "local_results_file=test_result/results_{{ item }}.csv"
+        -e "local_responses_file=test_result/responses_{{ item }}.tar.gz"
         -e "local_output_dir=test_result" serverledge-deploy/run_experiment.yml
       loop:
         - 1
@@ -41,7 +41,19 @@
   connection: local
   tasks:
     - name: transfer test_results.csv
-      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/results.csv ./test_results
+      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/results_{{ item }}.csv ./test_results
+      loop:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
 
     - name: transfer responses archive
-      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/responses.tar.gz ./test_results
+      ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/responses_{{ item }}.tar.gz ./test_results
+      loop:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
