@@ -57,6 +57,10 @@
       copy:
         src: ../run_users_experiment.sh
         dest: ~/serverledge-deploy/run_users_experiment.sh
+    - name: Copy classes configuration file
+      copy:
+        src: ../../templates/serverledge-classes.json
+        dest: ~/serverledge-deploy/files/
 
 - name: Copy Serverledge binaries in remote server
   hosts: server
