@@ -21,7 +21,7 @@
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">60</stringProp>
+        <stringProp name="ThreadGroup.duration">600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <boolProp name="ThreadGroup.delayedStart">false</boolProp>
@@ -35,7 +35,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;Params&quot;: {&quot;n&quot;: 12},&#xd;
-	&quot;QoSClass&quot;: ${__Random(0,1)},&#xd;
+	&quot;QoSClass&quot;: &quot;${__V(class${__Random(1,2,)})}&quot;,&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
 }&#xd;
@@ -92,6 +92,16 @@
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
               <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="class" elementType="Argument">
+              <stringProp name="Argument.name">class1</stringProp>
+              <stringProp name="Argument.value">default</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="class" elementType="Argument">
+              <stringProp name="Argument.name">class2</stringProp>
+              <stringProp name="Argument.value">premium</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -203,7 +213,7 @@
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">60</stringProp>
+        <stringProp name="ThreadGroup.duration">600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <boolProp name="ThreadGroup.delayedStart">false</boolProp>
@@ -217,7 +227,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 	&quot;Params&quot;: {&quot;imgurl&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/6/62/Big_and_little_dog.jpg&quot;},&#xd;
-	&quot;QoSClass&quot;: ${__Random(0,1)},&#xd;
+	&quot;QoSClass&quot;: &quot;${__V(class${__Random(1,2,)})}&quot;,&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
 }&#xd;
@@ -274,6 +284,16 @@
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
               <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="class" elementType="Argument">
+              <stringProp name="Argument.name">class1</stringProp>
+              <stringProp name="Argument.value">default</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="class" elementType="Argument">
+              <stringProp name="Argument.name">class2</stringProp>
+              <stringProp name="Argument.value">premium</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
