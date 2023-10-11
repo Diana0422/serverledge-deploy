@@ -70,8 +70,6 @@
   tasks:
     - name: Pull imageClass function image from docker hub
       ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
-    - name: Pull serverledge-python-ffmpeg function image from docker hub
-      ansible.builtin.shell: docker image pull grussorusso/serverledge-python-ffmpeg
 
 - name: Quick benchmark
   hosts: 
