@@ -31,10 +31,6 @@
         -e "local_output_dir=test_result" serverledge-deploy/run_experiment.yml
       loop:
         - 1
-        - 2
-        - 3
-        - 4
-        - 5
 
 - name: Transfer test_results on local machine
   hosts: localhost
@@ -44,16 +40,8 @@
       ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/results_{{ item }}.csv ./test_results
       loop:
         - 1
-        - 2
-        - 3
-        - 4
-        - 5
 
     - name: transfer responses archive
       ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/responses_{{ item }}.tar.gz ./test_results
       loop:
         - 1
-        - 2
-        - 3
-        - 4
-        - 5

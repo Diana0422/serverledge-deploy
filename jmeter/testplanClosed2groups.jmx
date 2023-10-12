@@ -58,6 +58,15 @@
           <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
           <boolProp name="HTTPSampler.md5">false</boolProp>
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">qosClass</stringProp>
+            <stringProp name="RegexExtractor.regex">QoSClass&quot;: &quot;(.*?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">NOT_FOUND</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <boolProp name="RegexExtractor.useField">false</boolProp>
+          </RegexExtractor>
         </HTTPSamplerProxy>
         <hashTree/>
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
@@ -139,6 +148,8 @@
               <threadCounts>true</threadCounts>
               <idleTime>true</idleTime>
               <connectTime>true</connectTime>
+
+              <qosClass>true</qosClass>
             </value>
           </objProp>
           <stringProp name="filename"></stringProp>
@@ -185,6 +196,8 @@
               <threadCounts>true</threadCounts>
               <idleTime>true</idleTime>
               <connectTime>true</connectTime>
+
+              <qosClass>true</qosClass>
             </value>
           </objProp>
           <stringProp name="filename">/tmp/jmeter_data</stringProp>
@@ -250,6 +263,15 @@
           <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
           <boolProp name="HTTPSampler.md5">false</boolProp>
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">qosClass</stringProp>
+            <stringProp name="RegexExtractor.regex">QoSClass&quot;: &quot;(.*?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">NOT_FOUND</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <boolProp name="RegexExtractor.useField">false</boolProp>
+          </RegexExtractor>
         </HTTPSamplerProxy>
         <hashTree/>
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
@@ -331,6 +353,8 @@
               <threadCounts>true</threadCounts>
               <idleTime>true</idleTime>
               <connectTime>true</connectTime>
+
+              <qosClass>true</qosClass>
             </value>
           </objProp>
           <stringProp name="filename"></stringProp>
@@ -377,6 +401,8 @@
               <threadCounts>true</threadCounts>
               <idleTime>true</idleTime>
               <connectTime>true</connectTime>
+
+              <qosClass>true</qosClass>
             </value>
           </objProp>
           <stringProp name="filename">/tmp/jmeter_data</stringProp>
