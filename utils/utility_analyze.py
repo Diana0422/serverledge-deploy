@@ -28,29 +28,6 @@ for entry in os.listdir(DIR):
                 qosOk = True if d["ResponseTime"] <= 1 else False
                 print(f'{d["Name"]},{d["Class"]},{d["ResponseTime"]:.5f},{d["SchedAction"]},{qosOk}', file=of)
 
-    total_utility = 0
-    total_penalty = 0
-
-    pL_U = [[0, 0], [0, 0]]  # row = function f, column = class k
-    pC_U = [[0, 0], [0, 0]]
-    pE_U = [[0, 0], [0, 0]]
-    pL_P = [[0, 0], [0, 0]]  # row = function f, column = class k
-    pC_P = [[0, 0], [0, 0]]
-    pE_P = [[0, 0], [0, 0]]
-    total_requests = 0
-
-    number_default_fibo = 0
-    lambda_default_fibo = 0
-    number_default_image = 0
-    lambda_default_image = 0
-    number_premium_fibo = 0
-    number_premium_image = 0
-
-    utility_default = 0
-    penalty_default = 0
-    utility_premium = 0
-    penalty_premium = 0
-
     utility = 0
     penalty = 0
 
