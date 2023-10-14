@@ -86,7 +86,7 @@
         name: serverledge_lb
       when: "{{ groups['sedge_Cloud'] | length | int }} > 1"
 
-- name: Set delay on the Client node
+- name: Copy delay script on the Client node
   hosts:
     - sedge_Client
   tasks:
@@ -94,12 +94,8 @@
       copy:
         src: delay_scripts/delay_script_client.sh
         dest: delay_script_client.sh
-    - name: set execution permissions for the script
-      ansible.builtin.shell: chmod +x delay_script_client.sh
-    - name: execute script on Client node
-      ansible.builtin.shell: ./delay_script_client.sh
 
-- name: Set delay one the Edge node 1
+- name: Copy delay script on the Edge node 1
   hosts:
     - sedge_Edge[0]
   tasks:
@@ -107,12 +103,8 @@
       copy:
         src: delay_scripts/delay_script_edge1.sh
         dest: delay_script_edge1.sh
-    - name: set execution permissions for the script
-      ansible.builtin.shell: chmod +x delay_script_edge1.sh
-    - name: execute script on Edge 1 node
-      ansible.builtin.shell: ./delay_script_edge1.sh
 
-- name: Set delay on the Edge node 2
+- name: Copy delay script on the Edge node 2
   hosts:
     - sedge_Edge[1]
   tasks:
@@ -120,12 +112,8 @@
       copy:
         src: delay_scripts/delay_script_edge2.sh
         dest: delay_script_edge2.sh
-    - name: set execution permission for the script
-      ansible.builtin.shell: chmod +x delay_script_edge2.sh
-    - name: execute script on Edge 2 node
-      ansible.builtin.shell: ./delay_script_edge2.sh
 
-- name: Copy delay script to Edge node 3
+- name: Copy delay script on Edge node 3
   hosts:
     - sedge_Edge[2]
   tasks:
@@ -133,7 +121,3 @@
       copy:
         src: delay_scripts/delay_script_edge3.sh
         dest: delay_script_edge3.sh
-    - name: set execution permission for the script
-      ansible.builtin.shell: chmod +x delay_script_edge3.sh
-    - name: execute script on Edge 3 node
-      ansible.builtin.shell: ./delay_script_edge3.sh
