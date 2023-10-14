@@ -58,7 +58,7 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
@@ -78,6 +78,16 @@
          }
          log.info(&quot;** &quot;+vars.get(&quot;qosClass&quot;)+&quot; **&quot;)</stringProp>
              <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Response" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
+          vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
+          log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
           <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -212,7 +222,7 @@
         <hashTree/>
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <stringProp name="sampleVariables">qosClass</stringProp>
+          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
@@ -311,7 +321,7 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor" enabled="true">
+        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
            <stringProp name="cacheKey">true</stringProp>
            <stringProp name="filename"></stringProp>
            <stringProp name="parameters"></stringProp>
@@ -331,6 +341,16 @@
                }
                log.info(&quot;** &quot;+vars.get(&quot;qosClass&quot;)+&quot; **&quot;)</stringProp>
               <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Response" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
+                    vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
+                    log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
         </hashTree>
@@ -428,7 +448,7 @@
         <hashTree/>
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <stringProp name="sampleVariables">qosClass</stringProp>
+          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">

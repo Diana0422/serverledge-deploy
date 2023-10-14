@@ -213,7 +213,7 @@
       ignore_errors: True
 
     - name: Configure sample variables
-      ansible.builtin.shell: "echo 'sample_variables=qosClass' >> {{ ansible_env.HOME }}/apache-jmeter-5.5/bin/user.properties"
+      ansible.builtin.shell: "echo 'sample_variables=qosClass,schedulingAction' >> {{ ansible_env.HOME }}/apache-jmeter-5.5/bin/user.properties"
 
     - name: Start 
       ansible.builtin.shell: "{{ ansible_env.HOME }}/apache-jmeter-5.5/bin/jmeter -n -t ./testplan.jmx -l /tmp/jmeter_results -Jhost={{ groups['sedge_Edge'][0] }} -Jusers={{ users }}"
