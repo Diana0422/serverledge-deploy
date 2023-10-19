@@ -138,11 +138,12 @@
     # ImageClassification
     func_name_2: ImageClass
     func_mem_2: 768
+    func_cpu_2: 3.0
     func_runtime_2: custom
     func_image: grussorusso/serverledge-imageclass
 
     testplan: jmeter/testplanClosed2groups.jmx
-    users: 3
+    users: 15
     local_results_file: test_results.csv
     local_responses_file: responses.tar.gz
 
@@ -191,7 +192,7 @@
           #- ansible.builtin.shell: "./serverledge-cli create -f myFunction --memory 128 --cpu 1.0 --src sieve.js --runtime nodejs17ng --handler sieve.js"
         #  environment:
         #    SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
-    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name_2 }} --memory {{ func_mem_2 }} --runtime {{ func_runtime_2 }} --custom_image {{ func_image }}"
+    - ansible.builtin.shell: "./serverledge/serverledge-cli create -f {{ func_name_2 }} --memory {{ func_mem_2 }} --cpu {{ func_cpu_2 }} --runtime {{ func_runtime_2 }} --custom_image {{ func_image }}"
       environment:
         SERVERLEDGE_HOST: '{{ groups["sedge_Edge"][0] }}'
 

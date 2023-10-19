@@ -13,11 +13,11 @@ DIR=sys.argv[1] if len(sys.argv) > 1 else "."
 
 
 for entry in os.listdir(DIR):
-    m = re.match("test_results-(\d+).csv", entry)
+    m = re.match("results_(\d+).csv", entry)
     if m is None:
         continue
     users = int(m.groups()[0])
-    df = pd.read_csv(os.path.join(DIR,entry))
+    df = pd.read_csv(os.path.join(DIR, entry))
 
     experiment_time = (df.timeStamp.max()-df.timeStamp.min())/1000.0
     completed = df[df.responseCode==200]
@@ -37,7 +37,7 @@ df = pd.DataFrame(results)
 results_responses = []
 if ANALYZE_RESPONSES:
     for entry in os.listdir(DIR):
-        m = re.match("responses-(\d+).tar.gz", entry)
+        m = re.match("responses_(\d+).tar.gz", entry)
         if m is None:
             continue
         users = int(m.groups()[0])

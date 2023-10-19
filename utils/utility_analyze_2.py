@@ -31,22 +31,22 @@ for entry in os.listdir(DIR):
         print(f"arrival rate (r/s): {arrivalRate}")
         print(f"num. users: {elapsed_mean/arrivalRate}")
 
-        """
-        default = df[df.QoSClass == "default"]
-        premium = df[df.QoSClass == "premium"]
-        for request in df.rows:
-            if request["QoSClass"] == "default":
-                if request["elapsed"] <= float('inf'):
-                    utility += 1
-                else:
-                    penalty += 1
-            elif request["QoSClass"] == "premium":
-                if request["elapsed"] <= 1:
-                    utility += 10
-                else:
-                    penalty += 10
+        # calculate utility
 
-        """
+        default = df[df.qosClass == "default"]
+        premium = df[df.qosClass == "premium"]
+        for i in range(len(df)):
+            if df.loc[i, "responseCode"] == 200:
+                if df.loc[i, "qosClass"] == "default":
+                    if df.loc[i, "elapsed"] <= float('inf'):
+                        utility += 1
+                    else:
+                        penalty += 1
+                elif df.loc[i, "qosClass"] == "premium":
+                    if df.loc[i, "elapsed"] <= 4000:
+                        utility += 10
+                    else:
+                        penalty += 10
 
         net_utility = utility - penalty
 

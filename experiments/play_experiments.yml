@@ -12,8 +12,7 @@
   hosts: localhost
   connection: local
   tasks:
-    - ansible.builtin.shell: ansible-playbook -i main_inventory.yaml 
-        start/main_playbook.yaml
+    - ansible.builtin.shell: ansible-playbook -i main_inventory.yaml start/main_playbook.yaml
 
 - name: Deploy Serverledge
   hosts: server
@@ -30,7 +29,7 @@
         -e "local_responses_file=test_result/responses_{{ item }}.tar.gz"
         -e "local_output_dir=test_result" serverledge-deploy/run_experiment.yml
       loop:
-        - 10
+        - 1
 
 - name: Transfer test_results on local machine
   hosts: localhost
@@ -39,9 +38,9 @@
     - name: transfer test_results.csv
       ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/results_{{ item }}.csv ./test_results
       loop:
-        - 10
+        - 1
 
     - name: transfer responses archive
       ansible.builtin.shell: scp -r diana@160.80.97.154:./serverledge-deploy/test_result/responses_{{ item }}.tar.gz ./test_results
       loop:
-        - 10
+        - 1
