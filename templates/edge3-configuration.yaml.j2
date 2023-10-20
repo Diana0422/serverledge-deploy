@@ -5,6 +5,6 @@ etcd.address: "{{ groups['sedge_Cloud'][0] }}:2379"
 solver.address: "{{ groups['sedge_Cloud'][0] }}:2500"
 
 offloading: true
-scheduler.policy: edgecloud
+scheduler.policy: QoSAwareCloud
 container.pool.memory: 3072
-container.pool.cpus: 3
+container.pool.cpus: 2

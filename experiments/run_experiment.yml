@@ -12,6 +12,19 @@
     - name: execute script on Client node
       ansible.builtin.shell: ./delay_script_client.sh
 
+- name: Set delay on the Cloud node
+  hosts:
+    - sedge_Cloud
+  tasks:
+    - name: copy delay script on Cloud node
+      copy:
+        src: delay_scripts/delay_script_cloud.sh
+        dest: delay_script_cloud.sh
+    - name: set execution permissions for the script
+      ansible.builtin.shell: chmod +x delay_script_cloud.sh
+    - name: execute script on Cloud node
+      ansible.builtin.shell: ./delay_script_cloud.sh
+
 - name: Set delay one the Edge node 1
   hosts:
     - sedge_Edge[0]
@@ -143,7 +156,7 @@
     func_image: grussorusso/serverledge-imageclass
 
     testplan: jmeter/testplanClosed2groups.jmx
-    users: 15
+    users: 25
     local_results_file: test_results.csv
     local_responses_file: responses.tar.gz
 

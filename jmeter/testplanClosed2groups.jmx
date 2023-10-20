@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">150</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
@@ -32,7 +32,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;Params&quot;: {&quot;n&quot;: 100},&#xd;
+	&quot;Params&quot;: {&quot;n&quot;: 5000},&#xd;
 	&quot;QoSClass&quot;: &quot;${__V(class${__Random(1,2,)})}&quot;,&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
@@ -280,7 +280,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(users,1)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">75</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>

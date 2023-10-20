@@ -29,7 +29,6 @@ for entry in os.listdir(DIR):
         elapsed_mean = df["elapsed"].mean()/1000
         print(f"elapsed mean (s): {elapsed_mean}")
         print(f"arrival rate (r/s): {arrivalRate}")
-        print(f"num. users: {elapsed_mean/arrivalRate}")
 
         # calculate utility
 
@@ -43,7 +42,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 1
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 4000:
+                    if df.loc[i, "elapsed"] <= 2000:
                         utility += 10
                     else:
                         penalty += 10

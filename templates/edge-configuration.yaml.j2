@@ -6,6 +6,6 @@ solver.address: "{{ groups['sedge_Cloud'][0] }}:2500"
 #cloud.server.url: "http://{{ groups['sedge_Cloud'][-1] }}:1323"
 
 offloading: true
-scheduler.policy: edgecloud
+scheduler.policy: QoSAwareCloud
 container.pool.memory: 3072
-container.pool.cpus: 3
+container.pool.cpus: 2
