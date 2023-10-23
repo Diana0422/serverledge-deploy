@@ -42,7 +42,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 1
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 2000:
+                    if df.loc[i, "elapsed"] <= 660:
                         utility += 10
                     else:
                         penalty += 10

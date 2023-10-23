@@ -8,7 +8,7 @@
   {
     "name": "premium",
     "utility": 10,
-    "MaximumResponseTime": 4,
+    "MaximumResponseTime": 0.66,
     "CompletedPercentage": 0.9
   }
 ]
