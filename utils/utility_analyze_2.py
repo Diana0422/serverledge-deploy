@@ -18,11 +18,13 @@ for entry in os.listdir(DIR):
     print(df)
 
     with open(os.path.join(DIR, f"utilityResults_{users}.csv"), "w") as uf:
-        print("ClassName,Utility,Penalty,NetUtility", file=uf)
+        print("Utility,Penalty,NetUtility,DropCount,CompletionPercentage", file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
         completed = df[df.responseCode == 200]
         completed_count = completed.responseCode.count()
+        total_requests = len(df)
+        drop_count = total_requests - completed_count
         arrivalRate = df.responseCode.count()/experiment_time
 
         # calculate mean elapsed
@@ -31,7 +33,6 @@ for entry in os.listdir(DIR):
         print(f"arrival rate (r/s): {arrivalRate}")
 
         # calculate utility
-
         default = df[df.qosClass == "default"]
         premium = df[df.qosClass == "premium"]
         for i in range(len(df)):
@@ -42,11 +43,14 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 1
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 660:
+                    if df.loc[i, "elapsed"] <= 770:
                         utility += 10
                     else:
                         penalty += 10
 
         net_utility = utility - penalty
 
-        print(f'QoSAware,{utility:.5f},{penalty:.5f},{net_utility:.5f}', file=uf)
+        # Calculate completion percentage
+        completion_perc = completed_count / total_requests
+
+        print(f'{utility:.5f},{penalty:.5f},{net_utility:.5f}, {drop_count:.5f}, {completion_perc:.5f}', file=uf)

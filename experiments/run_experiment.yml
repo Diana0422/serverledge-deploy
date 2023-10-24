@@ -235,13 +235,13 @@
       poll: 20
       register: jmeter_out
 
-    - name: Zip Response files
-      community.general.archive:
-        path:
-          - jmeterResponse_*
-        dest: /tmp/jmeter_responses.tar.gz
-        format: gz
-        remove: yes
+    #- name: Zip Response files
+    #  community.general.archive:
+    #    path:
+    #      - jmeterResponse_*
+    #    dest: /tmp/jmeter_responses.tar.gz
+    #    format: gz
+    #    remove: yes
 
     - name: Copy test_results
       ansible.builtin.fetch: 
@@ -249,11 +249,11 @@
         dest: "{{ local_results_file }}"
         flat: yes
 
-    - name: Copy responses
-      ansible.builtin.fetch: 
-        src: /tmp/jmeter_responses.tar.gz
-        dest: "{{ local_responses_file }}"
-        flat: yes
+    #- name: Copy responses
+    #  ansible.builtin.fetch:
+    #    src: /tmp/jmeter_responses.tar.gz
+    #    dest: "{{ local_responses_file }}"
+    #    flat: yes
 
     - debug:
         var: jmeter_out.stdout_lines
