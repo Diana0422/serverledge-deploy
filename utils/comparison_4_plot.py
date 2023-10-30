@@ -11,7 +11,7 @@ print(os.listdir(DIR))
 # Creare un unico set di assi
 fig, ax = plt.subplots(figsize=(12, 6))
 
-policies = ['QoSAware - EdgeCloud', 'Basic']
+policies = ['QoSAware - EdgeCloud', 'QoSAware - CloudOnly']
 bar_labels = ['red', 'blue']
 bar_colors = ['tab:red', 'tab:blue']
 
@@ -34,7 +34,7 @@ def read_values(name) -> pd.DataFrame:
 
 for entry in os.listdir(DIR):
     print(entry)
-    if entry == "QoSAwareEdgeCloud" or entry == "Baseline":
+    if entry == "QoSAwareEdgeCloud" or entry == "QoSAwareCloud":
         df = read_values(entry)
         completed = df[df.responseCode == 200]
         responseTimes = completed.elapsed
@@ -52,7 +52,7 @@ ax.axhline(y=770, color='r', linestyle='--', label='Threshold (770)')
 
 # Aggiungi etichette all'asse x
 ax.set_xticks([1, 2])
-ax.set_xticklabels(["QoSAware - EdgeCloud", "Basic"])
+ax.set_xticklabels(["QoSAware - EdgeCloud", "QoSAware - CloudOnly"])
 ax.set_xlabel('Policies')
 
 # Aggiungi etichette all'asse y
@@ -62,4 +62,4 @@ ax.set_ylabel('Observed values')
 ax.yaxis.grid(True)
 
 plt.legend()
-plt.savefig("comparison_2_plot.svg")
+plt.savefig("comparison_4_plot.svg")

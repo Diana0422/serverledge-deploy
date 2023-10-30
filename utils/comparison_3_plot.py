@@ -10,7 +10,7 @@ print(os.listdir(DIR))
 
 fig, axs = plt.subplots()
 
-policies = ['QoSAware - EdgeCloud', 'Basic']
+policies = ['QoSAware - EdgeCloud', 'QoSAware - CloudOnly']
 utilities = []
 bar_labels = ['red', 'blue']
 bar_colors = ['tab:red', 'tab:blue']
@@ -43,7 +43,7 @@ def switch(name):
         penalty = ur.loc[0, "Penalty"]
         net = ur.loc[0, "NetUtility"]
         utilities.insert(0, net)
-    elif name == "Baseline":
+    elif name == "QoSAwareCloud":
         ur = read_values(name)
         utility = ur.loc[0, "Utility"]
         penalty = ur.loc[0, "Penalty"]
@@ -62,4 +62,4 @@ axs.bar(policies, utilities, label=bar_labels, color=bar_colors)
 axs.set_ylabel('Net utility')
 axs.set_title('Policies')
 
-plt.savefig("comparison_1_plot.svg")
+plt.savefig("comparison_3_plot.svg")

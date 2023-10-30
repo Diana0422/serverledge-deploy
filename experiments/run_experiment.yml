@@ -120,7 +120,7 @@
 
 - name: Install and Start Solver
   hosts:
-    - sedge_Edge[0]
+    - sedge_Cloud[0]
   tasks:
     - name: Stop old containers
       ansible.builtin.shell: docker stop Solver
@@ -151,7 +151,7 @@
     # ImageClassification
     func_name_2: ImageClass
     func_mem_2: 768
-    func_cpu_2: 3.0
+    func_cpu_2: 2.0
     func_runtime_2: custom
     func_image: grussorusso/serverledge-imageclass
 

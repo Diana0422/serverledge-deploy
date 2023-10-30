@@ -58,7 +58,7 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-         <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
@@ -77,15 +77,15 @@
              vars.putObject(&quot;qosClass&quot;, json.QoSClass)
          }
          log.info(&quot;** &quot;+vars.get(&quot;qosClass&quot;)+&quot; **&quot;)</stringProp>
-             <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Response" enabled="true">
-              <stringProp name="scriptLanguage">groovy</stringProp>
-              <stringProp name="parameters"></stringProp>
-              <stringProp name="filename"></stringProp>
-              <stringProp name="cacheKey">true</stringProp>
-              <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
           vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
           log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
@@ -159,7 +159,7 @@
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 10}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="class1" elementType="Argument">
@@ -212,17 +212,8 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <!--><ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
-          <stringProp name="FileSaver.filename">jmeterResponse_TG1_</stringProp>
-          <boolProp name="FileSaver.errorsonly">false</boolProp>
-          <boolProp name="FileSaver.successonly">false</boolProp>
-          <boolProp name="FileSaver.skipsuffix">true</boolProp>
-          <boolProp name="FileSaver.skipautonumber">false</boolProp>
-        </ResultSaver>
-        <hashTree/>-->
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
@@ -256,6 +247,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
+          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <stringProp name="filename">/tmp/jmeter_data</stringProp>
         </ResultCollector>
         <hashTree/>
@@ -271,6 +263,15 @@
         <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Runtime Controller" enabled="true">
           <stringProp name="RunTime.seconds">60</stringProp>
         </RunTime>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+          <stringProp name="maximumValue">2</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat">0</stringProp>
+          <boolProp name="perThread">true</boolProp>
+          <stringProp name="randomSeed">1234</stringProp>
+          <stringProp name="variableName">randomIndex</stringProp>
+        </RandomVariableConfig>
         <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
@@ -321,11 +322,11 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
-           <stringProp name="cacheKey">true</stringProp>
-           <stringProp name="filename"></stringProp>
-           <stringProp name="parameters"></stringProp>
-           <stringProp name="script">import groovy.json.JsonSlurper
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Request" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonSlurper
 
                log.info(sampler.getMethod() + &apos; &apos; + sampler.getUrl().toString())
 
@@ -340,15 +341,15 @@
                    vars.putObject(&quot;qosClass&quot;, json.QoSClass)
                }
                log.info(&quot;** &quot;+vars.get(&quot;qosClass&quot;)+&quot; **&quot;)</stringProp>
-              <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
           <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor Response" enabled="true">
-                <stringProp name="scriptLanguage">groovy</stringProp>
-                <stringProp name="parameters"></stringProp>
-                <stringProp name="filename"></stringProp>
-                <stringProp name="cacheKey">true</stringProp>
-                <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
                     vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
                     log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
@@ -385,7 +386,7 @@
             </elementProp>
             <elementProp name="userCount" elementType="Argument">
               <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 5}}</stringProp>
+              <stringProp name="Argument.value">${__P{users, 10}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="class1" elementType="Argument">
@@ -438,17 +439,8 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <!--><ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
-          <stringProp name="FileSaver.filename">jmeterResponse_TG2_</stringProp>
-          <boolProp name="FileSaver.errorsonly">false</boolProp>
-          <boolProp name="FileSaver.successonly">false</boolProp>
-          <boolProp name="FileSaver.skipsuffix">true</boolProp>
-          <boolProp name="FileSaver.skipautonumber">false</boolProp>
-        </ResultSaver>
-        <hashTree/>-->
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
@@ -482,6 +474,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
+          <stringProp name="sampleVariables">qosClass, schedulingAction</stringProp>
           <stringProp name="filename">/tmp/jmeter_data</stringProp>
         </ResultCollector>
         <hashTree/>
@@ -497,6 +490,15 @@
         <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Runtime Controller" enabled="true">
           <stringProp name="RunTime.seconds">60</stringProp>
         </RunTime>
+        <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+          <stringProp name="maximumValue">2</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat">0</stringProp>
+          <boolProp name="perThread">true</boolProp>
+          <stringProp name="randomSeed">1234</stringProp>
+          <stringProp name="variableName">randomIndex</stringProp>
+        </RandomVariableConfig>
         <hashTree/>
       </hashTree>
     </hashTree>

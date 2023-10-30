@@ -2,10 +2,11 @@
 api.port: 1323
 registry.udp.port: 9876
 etcd.address: "{{ groups['sedge_Cloud'][0] }}:2379"
-solver.address: "{{ groups['sedge_Edge'][0] }}:2500"
+solver.address: "{{ groups['sedge_Cloud'][0] }}:2500"
+#solver.evalinterval: 3
 #cloud.server.url: "http://{{ groups['sedge_Cloud'][-1] }}:1323"
 
 offloading: true
 scheduler.policy: QoSAwareEdgeCloud
 container.pool.memory: 3072
-container.pool.cpus: 2
+container.pool.cpus: 3

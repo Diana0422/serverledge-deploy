@@ -27,6 +27,8 @@ for entry in os.listdir(DIR):
         total_requests = len(df)
         drop_count = total_requests - completed_count
         arrivalRate = df.responseCode.count()/experiment_time
+        responseTimes = completed.elapsed
+        print(responseTimes)
 
         # calculate mean elapsed
         elapsed_mean = df["elapsed"].mean()/1000
@@ -41,15 +43,15 @@ for entry in os.listdir(DIR):
                 if df.loc[i, "qosClass"] == "default":
                     if df.loc[i, "elapsed"] <= float('inf'):
                         under_limit += 1
-                        utility += 1
+                        utility += 0.01
                     else:
-                        penalty += 1
+                        penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
                     if df.loc[i, "elapsed"] <= 770:
                         under_limit += 1
-                        utility += 10
+                        utility += 1.0
                     else:
-                        penalty += 10
+                        penalty += 0
 
         net_utility = utility - penalty
 
@@ -63,14 +65,17 @@ for entry in os.listdir(DIR):
         print("Node,Default(%),Premium(%)", file=distFile)
 
         # Filter data based on conditions and calculate percentages
-        default_l = (df[(df['qosClass'] == "default") & (df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
-        default_e = (df[(df['qosClass'] == "default") & (df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
-        default_c = (df[(df['qosClass'] == "default") & (df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+        default_l = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+        default_e = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+        default_c = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+        default_d = (df[(df['responseCode'] != 200) & (df['qosClass'] == "default")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
 
-        premium_l = (df[(df['qosClass'] == "premium") & (df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
-        premium_e = (df[(df['qosClass'] == "premium") & (df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
-        premium_c = (df[(df['qosClass'] == "premium") & (df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+        premium_l = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+        premium_e = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+        premium_c = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+        premium_d = (df[(df['responseCode'] != 200) & (df['qosClass'] == "premium")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
 
         print(f'Local,{default_l:.5f},{premium_l:.5f}', file=distFile)
         print(f'Edge,{default_e:.5f},{premium_e:.5f}', file=distFile)
         print(f'Cloud,{default_c:.5f},{premium_c:.5f}', file=distFile)
+        print(f'Dropped,{default_d:.5f},{premium_d:.5f}', file=distFile)
