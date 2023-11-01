@@ -10,6 +10,7 @@ print(os.listdir(DIR))
 
 # Creare un unico set di assi
 fig, ax = plt.subplots(figsize=(12, 6))
+plt.title("Response Time Comparison")
 
 policies = ['QoSAware - EdgeCloud', 'Basic']
 bar_labels = ['red', 'blue']
@@ -38,14 +39,9 @@ for entry in os.listdir(DIR):
         df = read_values(entry)
         completed = df[df.responseCode == 200]
         responseTimes = completed.elapsed
-        # Filtra le righe in cui elapsed supera 4000
-        rows_above_threshold = df[df['elapsed'] > 4000]
 
-        # Stampa le righe
-        print(rows_above_threshold)
-
-    # Sovrapponi i box plot nello stesso grafico
-        ax.boxplot(responseTimes.values, positions=[1] if entry == "QoSAwareEdgeCloud" else [2], widths=0.6, labels=[entry])
+        # Sovrapponi i box plot nello stesso grafico
+        ax.boxplot(responseTimes.values, positions=[1] if entry == "QoSAwareEdgeCloud" else [2], widths=0.6, labels=[entry], showfliers=False)
 
 # Aggiungi una linea orizzontale in corrispondenza del valore 770
 ax.axhline(y=770, color='r', linestyle='--', label='Threshold (770)')
@@ -56,7 +52,7 @@ ax.set_xticklabels(["QoSAware - EdgeCloud", "Basic"])
 ax.set_xlabel('Policies')
 
 # Aggiungi etichette all'asse y
-ax.set_ylabel('Observed values')
+ax.set_ylabel('Response Time (ms)')
 
 # Aggiungi una griglia orizzontale
 ax.yaxis.grid(True)
