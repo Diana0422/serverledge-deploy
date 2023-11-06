@@ -18,8 +18,9 @@ for entry in os.listdir(DIR):
     df = pd.read_csv(os.path.join(DIR, entry))
     print(df)
 
-    with open(os.path.join(DIR, f"utilityResults_{users}.csv"), "w") as uf:
-        print("TotalRequests,UnderLimit,Utility,Penalty,NetUtility,DropCount,CompletionPercentage", file=uf)
+    # calculate utility and cost
+    with open(os.path.join(DIR, f"utilityCostResults_{users}.csv"), "w") as uf:
+        print("TotalRequests,UnderLimit,Utility,Penalty,NetUtility,Cost,DropCount,CompletionPercentage", file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
         completed = df[df.responseCode == 200]
@@ -32,8 +33,11 @@ for entry in os.listdir(DIR):
 
         # calculate mean elapsed
         elapsed_mean = df["elapsed"].mean() / 1000
+        latency_mean = df["Latency"].mean()
         print(f"elapsed mean (s): {elapsed_mean}")
         print(f"arrival rate (r/s): {arrivalRate}")
+        print(f"latency mean (ms): {latency_mean}")
+
 
         # calculate utility
         default = df[df.qosClass == "default"]
@@ -47,7 +51,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 770:
+                    if df.loc[i, "elapsed"] <= 750:
                         under_limit += 1
                         utility += 1.0
                     else:
@@ -58,10 +62,15 @@ for entry in os.listdir(DIR):
         # Calculate completion percentage
         completion_perc = completed_count / total_requests
 
+        # Calculate cost
+        cost = sum(completed.cost)
+        print(f"cost: {cost}")
+
         print(
-            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{drop_count:.5f},{completion_perc:.5f}',
+            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
             file=uf)
 
+    # calculate class distribution
     with open(os.path.join(DIR, f"classDistribution_{users}.csv"), "w") as distFile:
         print("STO QUI")
         print("Node,Default(%),Premium(%)", file=distFile)
@@ -90,6 +99,7 @@ for entry in os.listdir(DIR):
         print(f'Cloud,{default_c:.5f},{premium_c:.5f}', file=distFile)
         print(f'Dropped,{default_d:.5f},{premium_d:.5f}', file=distFile)
 
+    # calculate mean response times
     with open(os.path.join(DIR, f"meanResponsesForFibonacci_{users}.csv"), "w") as respFile1:
         print("Node,Response Time (ms)", file=respFile1)
 

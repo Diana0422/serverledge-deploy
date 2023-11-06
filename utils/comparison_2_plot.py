@@ -43,8 +43,8 @@ for entry in os.listdir(DIR):
         # Sovrapponi i box plot nello stesso grafico
         ax.boxplot(responseTimes.values, positions=[1] if entry == "QoSAwareEdgeCloud" else [2], widths=0.6, labels=[entry], showfliers=False)
 
-# Aggiungi una linea orizzontale in corrispondenza del valore 770
-ax.axhline(y=770, color='r', linestyle='--', label='Threshold (770)')
+# Aggiungi una linea orizzontale in corrispondenza del valore maxRt
+ax.axhline(y=750, color='r', linestyle='--', label='Threshold (750)')
 
 # Aggiungi etichette all'asse x
 ax.set_xticks([1, 2])

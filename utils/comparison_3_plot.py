@@ -26,7 +26,7 @@ def read_values(name) -> pd.DataFrame:
         path = path + "/" + usersDir
         for file in os.listdir(path):
             print(f"file: {file}")
-            m = re.match(r"utilityResults_(\d+)", file)
+            m = re.match(r"utilityCostResults_(\d+)", file)
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))

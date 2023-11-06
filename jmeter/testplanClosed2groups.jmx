@@ -87,7 +87,9 @@
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
           vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
-          log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
+          vars.putObject(&quot;cost&quot;, json.Cost)
+          log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)
+          log.info(&quot;***************&quot;+cost +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
           <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
@@ -351,7 +353,9 @@
             <stringProp name="cacheKey">true</stringProp>
             <stringProp name="script">def json = new groovy.json.JsonSlurper().parse(prev.getResponseData())
                     vars.putObject(&quot;schedulingAction&quot;, json.SchedAction)
-                    log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)</stringProp>
+                    vars.putObject(&quot;cost&quot;, json.Cost)
+                    log.info(&quot;***************&quot;+schedulingAction +&quot;****************&quot;)
+                    log.info(&quot;***************&quot;+cost +&quot;****************&quot;)</stringProp>
           </JSR223PostProcessor>
           <hashTree/>
         </hashTree>
