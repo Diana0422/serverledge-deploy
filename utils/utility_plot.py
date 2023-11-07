@@ -32,17 +32,15 @@ def read_values(name) -> pd.DataFrame:
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))
-            tot_requests = f.loc[0, "TotalRequests"]
-            print(f"tot_requests: {tot_requests}")
-            if 17000 <= tot_requests <= 18000:
-                net = f.loc[0, "NetUtility"]
-                if name not in utilities.keys():
-                    utilities.update({name: [net]})
-                else:
-                    nets = utilities.get(name)
-                    nets.append(net)
-                    utilities.update({name: nets})
-                print(utilities)
+            per_req_utility = f.loc[0, "PerRequestUtility"]
+            #net = f.loc[0, "NetUtility"]
+            if name not in utilities.keys():
+                utilities.update({name: [per_req_utility]})
+            else:
+                nets = utilities.get(name)
+                nets.append(per_req_utility)
+                utilities.update({name: nets})
+            print(utilities)
             path = DIR + "/" + name
 
 

@@ -20,7 +20,7 @@ for entry in os.listdir(DIR):
 
     # calculate utility and cost
     with open(os.path.join(DIR, f"utilityCostResults_{users}.csv"), "w") as uf:
-        print("TotalRequests,UnderLimit,Utility,Penalty,NetUtility,Cost,DropCount,CompletionPercentage", file=uf)
+        print("TotalRequests,UnderLimit,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage", file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
         completed = df[df.responseCode == 200]
@@ -58,16 +58,18 @@ for entry in os.listdir(DIR):
                         penalty += 0
 
         net_utility = utility - penalty
+        per_request_utility = net_utility / total_requests
 
         # Calculate completion percentage
         completion_perc = completed_count / total_requests
 
         # Calculate cost
-        cost = sum(completed.cost)
-        print(f"cost: {cost}")
+        total_cost = sum(completed.cost)
+        cost_per_hour = total_cost / (experiment_time/3600)
+        print(f"$/h: {cost_per_hour}")
 
         print(
-            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
+            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{cost_per_hour:.5f},{drop_count:.5f},{completion_perc:.5f}',
             file=uf)
 
     # calculate class distribution

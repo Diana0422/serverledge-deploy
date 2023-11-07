@@ -34,24 +34,22 @@ def read_values(name) -> pd.DataFrame:
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))
-            # Filter for number of requests
-            if 17000 <= len(f) <= 18000:
-                ok = f[f.responseCode == 200]
+            ok = f[f.responseCode == 200]
 
-                if name not in original_values.keys():
-                    original_values.update({name: [ok.elapsed]})
-                else:
-                    old_values = original_values.get(name)
-                    old_values.append(ok.elapsed)
-                    original_values.update({name: old_values})
+            if name not in original_values.keys():
+                original_values.update({name: [ok.elapsed]})
+            else:
+                old_values = original_values.get(name)
+                old_values.append(ok.elapsed)
+                original_values.update({name: old_values})
 
-                mean = np.mean(ok.elapsed)
-                if name not in mean_elapsed.keys():
-                    mean_elapsed.update({name: [mean]})
-                else:
-                    means = mean_elapsed.get(name)
-                    means.append(mean)
-                    mean_elapsed.update({name: means})
+            mean = np.mean(ok.elapsed)
+            if name not in mean_elapsed.keys():
+                mean_elapsed.update({name: [mean]})
+            else:
+                means = mean_elapsed.get(name)
+                means.append(mean)
+                mean_elapsed.update({name: means})
             path = DIR + "/" + name
 
 
