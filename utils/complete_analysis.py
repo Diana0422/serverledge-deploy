@@ -20,7 +20,9 @@ for entry in os.listdir(DIR):
 
     # calculate utility and cost
     with open(os.path.join(DIR, f"utilityCostResults_{users}.csv"), "w") as uf:
-        print("TotalRequests,UnderLimit,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage", file=uf)
+        print(
+            "TotalRequests,UnderLimit,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage",
+            file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
         completed = df[df.responseCode == 200]
@@ -38,7 +40,6 @@ for entry in os.listdir(DIR):
         print(f"arrival rate (r/s): {arrivalRate}")
         print(f"latency mean (ms): {latency_mean}")
 
-
         # calculate utility
         default = df[df.qosClass == "default"]
         premium = df[df.qosClass == "premium"]
@@ -51,7 +52,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 750:
+                    if df.loc[i, "elapsed"] <= 880:
                         under_limit += 1
                         utility += 1.0
                     else:
@@ -65,7 +66,7 @@ for entry in os.listdir(DIR):
 
         # Calculate cost
         total_cost = sum(completed.cost)
-        cost_per_hour = total_cost / (experiment_time/3600)
+        cost_per_hour = total_cost / (experiment_time / 3600)
         print(f"$/h: {cost_per_hour}")
 
         print(
@@ -81,18 +82,18 @@ for entry in os.listdir(DIR):
         default_l = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (
             df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
         default_e = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (
-                    df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+                df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
         default_c = (df[(df['responseCode'] == 200) & (df['qosClass'] == "default") & (
-                    df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
+                df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "default"].shape[0]) * 100
         default_d = (df[(df['responseCode'] != 200) & (df['qosClass'] == "default")].shape[0] /
                      df[df['qosClass'] == "default"].shape[0]) * 100
 
         premium_l = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (
             df['schedulingAction'].isna())].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
         premium_e = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (
-                    df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+                df['schedulingAction'] == "O_E")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
         premium_c = (df[(df['responseCode'] == 200) & (df['qosClass'] == "premium") & (
-                    df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
+                df['schedulingAction'] == "O_C")].shape[0] / df[df['qosClass'] == "premium"].shape[0]) * 100
         premium_d = (df[(df['responseCode'] != 200) & (df['qosClass'] == "premium")].shape[0] /
                      df[df['qosClass'] == "premium"].shape[0]) * 100
 
@@ -110,10 +111,10 @@ for entry in os.listdir(DIR):
                 df['schedulingAction'].isna())]
         fibonacci_e = df[
             (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (
-                        df['schedulingAction'] == "O_E")]
+                    df['schedulingAction'] == "O_E")]
         fibonacci_c = df[
             (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (
-                        df['schedulingAction'] == "O_C")]
+                    df['schedulingAction'] == "O_C")]
 
         fibonacci_meanResp_l = fibonacci_l["elapsed"].mean()
         fibonacci_meanResp_e = fibonacci_e["elapsed"].mean()
