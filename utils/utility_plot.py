@@ -9,7 +9,7 @@ DIR = sys.argv[1] if len(sys.argv) > 1 else "."
 
 print(os.listdir(DIR))
 
-fig, axs = plt.subplots()
+fig, axs = plt.subplots(figsize=(12, 6))
 
 policies = ['QoSAware - EdgeCloud', 'QoSAware - CloudOnly', 'Basic', 'MinR']
 utilities = {}

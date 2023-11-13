@@ -40,6 +40,11 @@
       meta: reset_connection
       when: groupupdated
 
+    # Fixme: added to resolve docker EOF error (maybe temporary)
+    - name: restart docker service
+      ansible.builtin.command: service docker restart
+
+
 - name: Install Etcd
   hosts: sedge_Cloud[0]
   roles:
@@ -74,6 +79,15 @@
     conf_template: cloud-configuration.yaml.j2
   roles:
     - serverledge
+
+
+- name: Pull Function images from Docker hub
+  hosts:
+    - sedge_Edge
+    - sedge_Cloud
+  tasks:
+    - name: Pull imageClass function image from docker hub
+      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
 
 
 - name: Install LB in the Cloud

@@ -73,6 +73,10 @@
       ansible.builtin.shell: docker stop InfluxDb
       ignore_errors: True
 
+    # Fixme: added to resolve docker EOF error (maybe temporary)
+    - name: restart docker service
+      ansible.builtin.command: service docker restart
+
     - name: Start InfluxDb
       ansible.builtin.shell: docker run -d --rm -p 8086:8086 --name InfluxDb
         -e DOCKER_INFLUXDB_INIT_MODE=setup \
@@ -126,15 +130,12 @@
       ansible.builtin.shell: docker stop Solver
       ignore_errors: True
 
+    # Fixme: added to resolve docker EOF error (maybe temporary)
+    #- name: restart docker service
+    #  ansible.builtin.command: service docker restart
+
     - name: Start Solver
       ansible.builtin.shell: docker run -d -p 2500:2500 --rm --name Solver diana0422/serverledge-solver
-
-- name: Pull Function images from Docker hub
-  hosts:
-    - sedge_Edge
-  tasks:
-    - name: Pull imageClass function image from docker hub
-      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
 
 - name: Quick benchmark
   hosts: 
