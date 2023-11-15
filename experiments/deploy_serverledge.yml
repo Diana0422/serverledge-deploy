@@ -41,8 +41,8 @@
       when: groupupdated
 
     # Fixme: added to resolve docker EOF error (maybe temporary)
-    - name: restart docker service
-      ansible.builtin.command: service docker restart
+    #- name: restart docker service
+    #  ansible.builtin.command: service docker restart
 
 
 - name: Install Etcd
@@ -86,8 +86,9 @@
     - sedge_Edge
     - sedge_Cloud
   tasks:
-    - name: Pull imageClass function image from docker hub
-      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
+    # FIXME suspended
+    #- name: Pull imageClass function image from docker hub
+    #  ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
 
 
 - name: Install LB in the Cloud
