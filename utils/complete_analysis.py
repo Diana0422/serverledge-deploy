@@ -9,6 +9,9 @@ print(os.listdir(DIR))
 penalty = 0
 utility = 0
 under_limit = 0
+out_edge = 0
+out_cloud = 0
+out_local = 0
 
 for entry in os.listdir(DIR):
     m = re.match("results_(\d+).csv", entry)
@@ -31,7 +34,6 @@ for entry in os.listdir(DIR):
         drop_count = total_requests - completed_count
         arrivalRate = df.responseCode.count() / experiment_time
         responseTimes = completed.elapsed
-        print(responseTimes)
 
         # calculate mean elapsed
         elapsed_mean = df["elapsed"].mean() / 1000
@@ -52,26 +54,67 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 5000:
+                    if df.loc[i, "elapsed"] <= 10000:
                         under_limit += 1
                         utility += 1.0
                     else:
                         penalty += 0
+                        if df.loc[i, "schedulingAction"] == "O_E":
+                            out_edge += 1
+                        elif df.loc[i, "schedulingAction"] == "O_C":
+                            out_cloud += 1
+                        else:
+                            out_local += 1
 
+        if (out_cloud+out_local+out_edge) != 0:
+            perc_edge = out_edge / (out_cloud+out_local+out_edge)
+            perc_cloud = out_cloud / (out_cloud+out_local+out_edge)
+            perc_local = out_local / (out_cloud+out_local+out_edge)
+            print(f"out edge: {perc_edge}")
+            print(f"out cloud: {perc_cloud}")
+            print(f"out local: {perc_local}")
         net_utility = utility - penalty
         per_request_utility = net_utility / total_requests
+        print(f"net utility: {net_utility}")
 
         # Calculate completion percentage
         completion_perc = completed_count / total_requests
 
         # Calculate cost
-        total_cost = sum(completed.cost)
-        cost_per_hour = total_cost / (experiment_time / 3600)
-        print(f"$/h: {cost_per_hour}")
+        total_cost = sum(completed.cost) / experiment_time * 3600
+        print(f"$/h: {total_cost}")
+        print(f"budget $/h: {0.05}")
 
         print(
-            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{cost_per_hour:.5f},{drop_count:.5f},{completion_perc:.5f}',
+            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
             file=uf)
+
+    # calculate function infos
+    with open(os.path.join(DIR, f"functionsResults_{users}.csv"), "w") as funcFile:
+        print("FunctionName, DefaultResponseTime, PremiumResponseTime, DefaultCompleted, PremiumCompleted", file=funcFile)
+
+        completed_fib = completed[completed.URL == "http://192.168.122.2:1323/invoke/Fibonacci"]
+        completed_image = completed[completed.URL == "http://192.168.122.2:1323/invoke/ImageClass"]
+        completed_fib_def = completed_fib.qosClass.value_counts()["default"]
+        completed_fib_prem = completed_fib.qosClass.value_counts()["premium"]
+        completed_image_def = completed_image.qosClass.value_counts()["default"]
+        completed_image_prem = completed_image.qosClass.value_counts()["premium"]
+        completed_fib_def_perc = completed_fib_def / completed_count
+        completed_image_def_perc = completed_image_def / completed_count
+        completed_fib_prem_perc = completed_fib_prem / completed_count
+        completed_image_prem_perc = completed_image_prem / completed_count
+        function_response_times = completed[["elapsed", "URL", "qosClass"]]
+        response_time_fib_prem = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (function_response_times.qosClass == "premium")]
+        response_time_fib_def = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (function_response_times.qosClass == "default")]
+        response_time_image_prem = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (function_response_times.qosClass == "premium")]
+        response_time_image_def = response_time_fib = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (function_response_times.qosClass == "default")]
+        mean_time_fib_def = response_time_fib_def["elapsed"].mean()
+        mean_time_fib_prem = response_time_fib_prem["elapsed"].mean()
+        mean_time_image_def = response_time_image_def["elapsed"].mean()
+        mean_time_image_prem = response_time_image_prem["elapsed"].mean()
+
+        print(f'Fibonacci,{mean_time_fib_def:.5f},{mean_time_fib_prem:.5f},{completed_fib_def_perc:.5f},{completed_fib_prem_perc:.5f}', file=funcFile)
+        print(f'ImageClass,{mean_time_image_def:.5f},{mean_time_image_prem:.5f},{completed_image_def_perc:.5f},{completed_image_prem_perc:.5f}', file=funcFile)
 
     # calculate class distribution
     with open(os.path.join(DIR, f"classDistribution_{users}.csv"), "w") as distFile:

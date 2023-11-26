@@ -85,3 +85,5 @@ plt.title('Response time comparison between different policies')
 plt.axhline(y=5000, color='r', linestyle='--', label='Threshold (2000)')
 plt.legend()
 plt.savefig("elapsed_box_plot.svg")
+
+print(f"mean elapsed: {mean_elapsed}")

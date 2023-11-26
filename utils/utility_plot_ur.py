@@ -32,13 +32,13 @@ def read_values(name) -> pd.DataFrame:
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))
-            utility = f.loc[0, "NetUtility"]
+            per_req_utility = f.loc[0, "PerRequestUtility"]
             #net = f.loc[0, "NetUtility"]
             if name not in utilities.keys():
-                utilities.update({name: [utility]})
+                utilities.update({name: [per_req_utility]})
             else:
                 nets = utilities.get(name)
-                nets.append(utility)
+                nets.append(per_req_utility)
                 utilities.update({name: nets})
             print(utilities)
             path = DIR + "/" + name
@@ -81,7 +81,7 @@ plt.boxplot(data, labels=keys, showfliers=False)
 plt.xlabel('Policies')
 plt.ylabel('Net Utility')
 plt.title('Net utility comparison between different policies')
-plt.savefig("utility_box_plot.svg")
+plt.savefig("utility_ur_box_plot.svg")
 
 # Plot means in bar chart
 plt.clf()
@@ -95,4 +95,4 @@ plt.bar(keys, values, color=bar_labels)
 plt.xlabel('Policies')
 plt.ylabel('Net utility (mean)')
 plt.title('Mean net utility comparison between different policies')
-plt.savefig("utility_bar_plot.svg")
+plt.savefig("utility_ur_bar_plot.svg")

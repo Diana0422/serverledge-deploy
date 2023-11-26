@@ -64,6 +64,15 @@
     - name: execute script on Edge 3 node
       ansible.builtin.shell: ./delay_script_edge3.sh
 
+- name: Prune previous Docker containers
+  hosts:
+    - sedge_Edge
+    - sedge_Cloud
+  tasks:
+    - name: Stop and remove all containers
+      ansible.builtin.shell:  docker rm -f $(docker ps -a -q)
+      ignore_errors: True
+
 - name: Install and Start InfluxDb
   hosts:
     - sedge_Edge
@@ -87,10 +96,91 @@
         -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=serverledge \
         influxdb
 
-- name: Restart Serverledge
+- name: Restart Etcd
+  hosts: sedge_Cloud[0]
+  tasks:
+    - name: Restart etcd service
+      ansible.builtin.systemd:
+        name: myetcd
+        state: restarted
+        daemon_reload: yes
+      become: yes
+
+    - name: Wipe data
+      ansible.builtin.shell: ETCDCTL_API=3 etcdctl del "" --from-key=true
+
+- name: Restart Serverledge on Host 3 and Cloud
   hosts: 
-    - sedge_Edge
+    - sedge_Edge[2]
     - sedge_Cloud
+  tasks:
+    - include_tasks:
+        file: tasks/restart_serverledge.yml
+
+    - name: Install CPU monitoring script
+      ansible.builtin.copy:
+        src: monitorCPU.sh
+        dest: "{{ ansible_env.HOME }}"
+        mode: '0755'
+
+    - name: Install CPU monitoring service
+      ansible.builtin.template:
+        src: monitorCPU.service.j2
+        dest: /etc/systemd/system/monitorCPU.service
+        owner: root
+        group: root
+      become: yes
+      register: monitor_service
+
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: yes
+      become: yes
+      when: monitor_service.changed
+
+    - name: Start systemd service
+      ansible.builtin.systemd:
+        name: monitorCPU
+        state: restarted
+      become: yes
+
+- name: Restart Serverledge on Host 2
+  hosts:
+    - sedge_Edge[1]
+  tasks:
+    - include_tasks:
+        file: tasks/restart_serverledge.yml
+
+    - name: Install CPU monitoring script
+      ansible.builtin.copy:
+        src: monitorCPU.sh
+        dest: "{{ ansible_env.HOME }}"
+        mode: '0755'
+
+    - name: Install CPU monitoring service
+      ansible.builtin.template:
+        src: monitorCPU.service.j2
+        dest: /etc/systemd/system/monitorCPU.service
+        owner: root
+        group: root
+      become: yes
+      register: monitor_service
+
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: yes
+      become: yes
+      when: monitor_service.changed
+
+    - name: Start systemd service
+      ansible.builtin.systemd:
+        name: monitorCPU
+        state: restarted
+      become: yes
+
+- name: Restart Serverledge on Host 1
+  hosts:
+    - sedge_Edge[0]
   tasks:
     - include_tasks:
         file: tasks/restart_serverledge.yml

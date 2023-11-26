@@ -86,9 +86,8 @@
     - sedge_Edge
     - sedge_Cloud
   tasks:
-    # FIXME suspended
-    #- name: Pull imageClass function image from docker hub
-    #  ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
+    - name: Pull imageClass function image from docker hub
+      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
 
 
 - name: Install LB in the Cloud

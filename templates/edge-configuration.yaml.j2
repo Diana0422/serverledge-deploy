@@ -9,7 +9,7 @@ storage.address: "http://172.17.0.1:8086"
 
 # scheduling policy setting
 offloading: true
-scheduler.policy: QoSAwareCloud
+scheduler.policy: edgecloud
 solver.evalinterval: 60
 
 # resources setting
@@ -18,4 +18,4 @@ container.pool.cpus: 3
 
 # cost and budget settings
 scheduler.cloud.cost: 0.00005  # $/GBs
-scheduler.local.budget: 0.25   # $/h
+scheduler.local.budget: 0.05   # $/h
