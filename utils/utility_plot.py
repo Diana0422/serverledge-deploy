@@ -10,6 +10,8 @@ DIR = sys.argv[1] if len(sys.argv) > 1 else "."
 print(os.listdir(DIR))
 
 fig, axs = plt.subplots(figsize=(12, 6))
+axs.set_axisbelow(True)
+axs.yaxis.grid(color='gray', linestyle='dashed')
 
 policies = ['QoSAware - EdgeCloud', 'QoSAware - CloudOnly', 'Basic', 'MinR']
 utilities = {}
@@ -85,11 +87,12 @@ plt.savefig("utility_box_plot.svg")
 
 # Plot means in bar chart
 plt.clf()
+plt.grid(axis='y', zorder=0, color='gray', linestyle='dashed')
 keys = list(utility_means.keys())
 values = list(utility_means.values())
 
 # Crea il grafico a barre
-plt.bar(keys, values, color=bar_labels)
+plt.bar(keys, values, color=bar_labels, zorder=3)
 
 # Aggiungi etichette agli assi e un titolo al grafico
 plt.xlabel('Policies')

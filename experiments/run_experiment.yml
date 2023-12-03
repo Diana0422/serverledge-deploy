@@ -64,14 +64,14 @@
     - name: execute script on Edge 3 node
       ansible.builtin.shell: ./delay_script_edge3.sh
 
-- name: Prune previous Docker containers
-  hosts:
-    - sedge_Edge
-    - sedge_Cloud
-  tasks:
-    - name: Stop and remove all containers
-      ansible.builtin.shell:  docker rm -f $(docker ps -a -q)
-      ignore_errors: True
+#- name: Prune previous Docker containers
+#  hosts:
+#    - sedge_Edge
+#    - sedge_Cloud
+#  tasks:
+#    - name: Stop and remove all containers
+#      ansible.builtin.shell:  docker rm -f $(docker ps -a -q)
+#      ignore_errors: True
 
 - name: Install and Start InfluxDb
   hosts:
@@ -82,10 +82,6 @@
       ansible.builtin.shell: docker stop InfluxDb
       ignore_errors: True
 
-    # Fixme: added to resolve docker EOF error (maybe temporary)
-    - name: restart docker service
-      ansible.builtin.command: service docker restart
-
     - name: Start InfluxDb
       ansible.builtin.shell: docker run -d --rm -p 8086:8086 --name InfluxDb
         -e DOCKER_INFLUXDB_INIT_MODE=setup \
@@ -94,7 +90,7 @@
         -e DOCKER_INFLUXDB_INIT_ORG=serverledge \
         -e DOCKER_INFLUXDB_INIT_BUCKET=completions \
         -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=serverledge \
-        influxdb
+        influxdb:alpine
 
 - name: Restart Etcd
   hosts: sedge_Cloud[0]
@@ -219,10 +215,6 @@
     - name: Stop old containers
       ansible.builtin.shell: docker stop Solver
       ignore_errors: True
-
-    # Fixme: added to resolve docker EOF error (maybe temporary)
-    #- name: restart docker service
-    #  ansible.builtin.command: service docker restart
 
     - name: Start Solver
       ansible.builtin.shell: docker run -d -p 2500:2500 --rm --name Solver diana0422/serverledge-solver

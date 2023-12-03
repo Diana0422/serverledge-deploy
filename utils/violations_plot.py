@@ -32,7 +32,7 @@ def read_values(name) -> pd.DataFrame:
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))
-            violation_perc = 1 - f.loc[0, "UnderLimit"] / (f.loc[0, "TotalRequests"] - f.loc[0, "DropCount"])
+            violation_perc = 1 - f.loc[0, "UnderLimit"] / f.loc[0, "TotalRequests"]
             if name not in violations.keys():
                 violations.update({name: [violation_perc]})
             else:
