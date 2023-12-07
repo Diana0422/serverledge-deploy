@@ -54,7 +54,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= float('inf'):
+                    if df.loc[i, "elapsed"] <= 10000:
                         under_limit += 1
                         utility += 1.0
                     else:
@@ -93,8 +93,10 @@ for entry in os.listdir(DIR):
     with open(os.path.join(DIR, f"functionsResults_{users}.csv"), "w") as funcFile:
         print("FunctionName, DefaultResponseTime, PremiumResponseTime, DefaultCompleted, PremiumCompleted", file=funcFile)
 
-        completed_fib = completed[completed.URL == "http://192.168.122.2:1323/invoke/Fibonacci"]
-        completed_image = completed[completed.URL == "http://192.168.122.2:1323/invoke/ImageClass"]
+        completed_fib = completed[completed.URL == "http://192.168.122.101:1323/invoke/Fibonacci"]
+        completed_image = completed[completed.URL == "http://192.168.122.101:1323/invoke/ImageClass"]
+        print(completed_fib)
+        print(completed_image)
         completed_fib_def = completed_fib.qosClass.value_counts()["default"]
         completed_fib_prem = completed_fib.qosClass.value_counts()["premium"]
         completed_image_def = completed_image.qosClass.value_counts()["default"]
@@ -104,10 +106,10 @@ for entry in os.listdir(DIR):
         completed_fib_prem_perc = completed_fib_prem / completed_count
         completed_image_prem_perc = completed_image_prem / completed_count
         function_response_times = completed[["elapsed", "URL", "qosClass"]]
-        response_time_fib_prem = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (function_response_times.qosClass == "premium")]
-        response_time_fib_def = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (function_response_times.qosClass == "default")]
-        response_time_image_prem = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (function_response_times.qosClass == "premium")]
-        response_time_image_def = response_time_fib = function_response_times[(function_response_times.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (function_response_times.qosClass == "default")]
+        response_time_fib_prem = function_response_times[(function_response_times.URL == "http://192.168.122.101:1323/invoke/Fibonacci") & (function_response_times.qosClass == "premium")]
+        response_time_fib_def = function_response_times[(function_response_times.URL == "http://192.168.122.101:1323/invoke/Fibonacci") & (function_response_times.qosClass == "default")]
+        response_time_image_prem = function_response_times[(function_response_times.URL == "http://192.168.122.101:1323/invoke/ImageClass") & (function_response_times.qosClass == "premium")]
+        response_time_image_def = response_time_fib = function_response_times[(function_response_times.URL == "http://192.168.122.101:1323/invoke/ImageClass") & (function_response_times.qosClass == "default")]
         mean_time_fib_def = response_time_fib_def["elapsed"].mean()
         mean_time_fib_prem = response_time_fib_prem["elapsed"].mean()
         mean_time_image_def = response_time_image_def["elapsed"].mean()
@@ -150,13 +152,13 @@ for entry in os.listdir(DIR):
         print("Node,Response Time (ms)", file=respFile1)
 
         fibonacci_l = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/Fibonacci") & (
                 df['schedulingAction'].isna())]
         fibonacci_e = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/Fibonacci") & (
                     df['schedulingAction'] == "O_E")]
         fibonacci_c = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/Fibonacci") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/Fibonacci") & (
                     df['schedulingAction'] == "O_C")]
 
         fibonacci_meanResp_l = fibonacci_l["elapsed"].mean()
@@ -171,13 +173,13 @@ for entry in os.listdir(DIR):
         print("Node,Response Time (ms)", file=respFile2)
 
         image_l = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/ImageClass") & (
                 df['schedulingAction'].isna())]
         image_e = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/ImageClass") & (
                     df['schedulingAction'] == "O_E")]
         image_c = df[
-            (df.responseCode == 200) & (df.URL == "http://192.168.122.2:1323/invoke/ImageClass") & (
+            (df.responseCode == 200) & (df.URL == "http://192.168.122.101:1323/invoke/ImageClass") & (
                     df['schedulingAction'] == "O_C")]
 
         image_meanResp_l = image_l["elapsed"].mean()

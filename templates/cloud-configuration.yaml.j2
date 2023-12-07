@@ -4,8 +4,8 @@ etcd.address: "{{ groups['sedge_Cloud'][0] }}:2379"
 
 cloud: true
 scheduler.policy: localonly
-container.pool.memory: 6072
-container.pool.cpus: 4
+container.pool.memory: 20000
+container.pool.cpus: 18
 
 # Disable monitoring
 loggin.enabled: false
