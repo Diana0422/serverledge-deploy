@@ -2,7 +2,7 @@
 # IP1=Edge1 IP1
 # Sets delay from Client to Edge1 at 5ms
 DEV=enp1s0
-IP1=192.168.122.2
+IP1=192.168.122.101
 
 if tc qdisc show dev $DEV | grep "qdisc htb 1: root"; then
     tc qdisc del dev $DEV root

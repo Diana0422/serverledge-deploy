@@ -3,8 +3,8 @@
 # IP2=Edge3 IP2
 # IP3=Cloud IP3
 DEV=enp1s0
-IP3=192.168.122.6
-IP4=192.168.122.112
+IP3=192.168.122.45
+IP4=192.168.122.83
 
 if tc qdisc show dev $DEV | grep "qdisc htb 1: root"; then
     tc qdisc del dev $DEV root

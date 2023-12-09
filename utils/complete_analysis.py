@@ -54,7 +54,7 @@ for entry in os.listdir(DIR):
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 10000:
+                    if df.loc[i, "elapsed"] <= 700:
                         under_limit += 1
                         utility += 1.0
                     else:
@@ -81,9 +81,10 @@ for entry in os.listdir(DIR):
         completion_perc = completed_count / total_requests
 
         # Calculate cost
+        print(0.15 /experiment_time * 3600)
         total_cost = sum(completed.cost) / experiment_time * 3600
         print(f"$/h: {total_cost}")
-        print(f"budget $/h: {0.10}")
+        print(f"budget $/h: {0.40}")
 
         print(
             f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
@@ -95,8 +96,6 @@ for entry in os.listdir(DIR):
 
         completed_fib = completed[completed.URL == "http://192.168.122.101:1323/invoke/Fibonacci"]
         completed_image = completed[completed.URL == "http://192.168.122.101:1323/invoke/ImageClass"]
-        print(completed_fib)
-        print(completed_image)
         completed_fib_def = completed_fib.qosClass.value_counts()["default"]
         completed_fib_prem = completed_fib.qosClass.value_counts()["premium"]
         completed_image_def = completed_image.qosClass.value_counts()["default"]
