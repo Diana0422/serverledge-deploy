@@ -8,7 +8,8 @@ DIR = sys.argv[1] if len(sys.argv) > 1 else "."
 print(os.listdir(DIR))
 penalty = 0
 utility = 0
-under_limit = 0
+under_limit_default = 0
+under_limit_premium = 0
 out_edge = 0
 out_cloud = 0
 out_local = 0
@@ -24,7 +25,7 @@ for entry in os.listdir(DIR):
     # calculate utility and cost
     with open(os.path.join(DIR, f"utilityCostResults_{users}.csv"), "w") as uf:
         print(
-            "TotalRequests,UnderLimit,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage",
+            "TotalRequests,UnderLimitDefault,UnderLimitPremium,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage",
             file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
@@ -49,13 +50,13 @@ for entry in os.listdir(DIR):
             if df.loc[i, "responseCode"] == 200:
                 if df.loc[i, "qosClass"] == "default":
                     if df.loc[i, "elapsed"] <= float('inf'):
-                        under_limit += 1
+                        under_limit_default += 1
                         utility += 0.01
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 700:
-                        under_limit += 1
+                    if df.loc[i, "elapsed"] <= 3000:
+                        under_limit_premium += 1
                         utility += 1.0
                     else:
                         penalty += 0
@@ -81,13 +82,12 @@ for entry in os.listdir(DIR):
         completion_perc = completed_count / total_requests
 
         # Calculate cost
-        print(0.15 /experiment_time * 3600)
         total_cost = sum(completed.cost) / experiment_time * 3600
         print(f"$/h: {total_cost}")
         print(f"budget $/h: {0.40}")
 
         print(
-            f'{total_requests:.5f},{under_limit:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
+            f'{total_requests:.5f},{under_limit_default:.5f},{under_limit_premium:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
             file=uf)
 
     # calculate function infos

@@ -34,7 +34,7 @@ def read_values(name) -> pd.DataFrame:
             if m is None:
                 continue
             f = pd.read_csv(os.path.join(path, file))
-            ok = f[f.responseCode == 200]
+            ok = f[(f.responseCode == 200) & (f.qosClass == "premium")]
 
             if name not in original_values.keys():
                 original_values.update({name: [ok.elapsed]})
@@ -82,7 +82,7 @@ plt.ylabel('Elapsed (ms)')
 plt.title('Response time comparison between different policies')
 
 # Add a horizontal line to define the response time limit
-plt.axhline(y=5000, color='r', linestyle='--', label='Threshold (2000)')
+plt.axhline(y=1500, color='r', linestyle='--', label='Threshold (2000)')
 plt.legend()
 plt.savefig("elapsed_box_plot.svg")
 
