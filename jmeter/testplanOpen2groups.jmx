@@ -10,20 +10,11 @@
       </elementProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <OpenModelThreadGroup guiclass="OpenModelThreadGroupGui" testclass="OpenModelThreadGroup" testname="Open Model Thread Group - Func1" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="OpenModelThreadGroupController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <intProp name="LoopController.loops">-1</intProp>
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(users,10)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">600</stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
-      </ThreadGroup>
+        <stringProp name="OpenModelThreadGroup.schedule">rate(20/sec) random_arrivals(300 sec) rate(20/sec)</stringProp>
+      </OpenModelThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -130,23 +121,6 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
-          <intProp name="ActionProcessor.action">1</intProp>
-          <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">0</stringProp>
-        </TestAction>
-        <hashTree>
-          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause" enabled="false">
-            <stringProp name="ConstantTimer.delay">1000</stringProp>
-            <stringProp name="RandomTimer.range">100</stringProp>
-          </UniformRandomTimer>
-          <hashTree/>
-          <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">0</stringProp>
-            <stringProp name="RandomTimer.range">100</stringProp>
-          </PoissonRandomTimer>
-          <hashTree/>
-        </hashTree>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
             <elementProp name="host" elementType="Argument">
@@ -157,11 +131,6 @@
             <elementProp name="path1" elementType="Argument">
               <stringProp name="Argument.name">path1</stringProp>
               <stringProp name="Argument.value">/invoke/Fibonacci</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="userCount" elementType="Argument">
-              <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 10}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="class1" elementType="Argument">
@@ -195,7 +164,7 @@
               <assertions>true</assertions>
               <subresults>true</subresults>
               <responseData>false</responseData>
-              <samplerData>true</samplerData>
+              <samplerData>false</samplerData>
               <xml>false</xml>
               <fieldNames>true</fieldNames>
               <responseHeaders>false</responseHeaders>
@@ -213,6 +182,14 @@
           </objProp>
           <stringProp name="filename"></stringProp>
         </ResultCollector>
+        <hashTree/>
+        <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="false">
+          <stringProp name="FileSaver.filename">jmeterResponse_</stringProp>
+          <boolProp name="FileSaver.errorsonly">false</boolProp>
+          <boolProp name="FileSaver.successonly">false</boolProp>
+          <boolProp name="FileSaver.skipsuffix">true</boolProp>
+          <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        </ResultSaver>
         <hashTree/>
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -232,7 +209,7 @@
               <assertions>false</assertions>
               <subresults>true</subresults>
               <responseData>false</responseData>
-              <samplerData>true</samplerData>
+              <samplerData>false</samplerData>
               <xml>false</xml>
               <fieldNames>true</fieldNames>
               <responseHeaders>false</responseHeaders>
@@ -262,34 +239,11 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Runtime Controller" enabled="true">
-          <stringProp name="RunTime.seconds">60</stringProp>
-        </RunTime>
-        <hashTree/>
-        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
-          <stringProp name="maximumValue">2</stringProp>
-          <stringProp name="minimumValue">1</stringProp>
-          <stringProp name="outputFormat">0</stringProp>
-          <boolProp name="perThread">true</boolProp>
-          <stringProp name="randomSeed">1234</stringProp>
-          <stringProp name="variableName">randomIndex</stringProp>
-        </RandomVariableConfig>
-        <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <OpenModelThreadGroup guiclass="OpenModelThreadGroupGui" testclass="OpenModelThreadGroup" testname="Open Model Thread Group - Func2" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="OpenModelThreadGroupController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <intProp name="LoopController.loops">-1</intProp>
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(users,10)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">600</stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
-      </ThreadGroup>
+      </OpenModelThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -310,7 +264,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}</stringProp>
           <stringProp name="HTTPSampler.port">1323</stringProp>
-          <stringProp name="HTTPSampler.path">${path2}</stringProp>
+          <stringProp name="HTTPSampler.path">${path}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -359,23 +313,6 @@
           </JSR223PostProcessor>
           <hashTree/>
         </hashTree>
-        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
-          <intProp name="ActionProcessor.action">1</intProp>
-          <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">0</stringProp>
-        </TestAction>
-        <hashTree>
-          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause" enabled="false">
-            <stringProp name="ConstantTimer.delay">1000</stringProp>
-            <stringProp name="RandomTimer.range">100</stringProp>
-          </UniformRandomTimer>
-          <hashTree/>
-          <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">0</stringProp>
-            <stringProp name="RandomTimer.range">100</stringProp>
-          </PoissonRandomTimer>
-          <hashTree/>
-        </hashTree>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
             <elementProp name="host" elementType="Argument">
@@ -386,11 +323,6 @@
             <elementProp name="path2" elementType="Argument">
               <stringProp name="Argument.name">path2</stringProp>
               <stringProp name="Argument.value">/invoke/ImageClass</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="userCount" elementType="Argument">
-              <stringProp name="Argument.name">userCount</stringProp>
-              <stringProp name="Argument.value">${__P{users, 10}}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="class1" elementType="Argument">
@@ -424,7 +356,7 @@
               <assertions>true</assertions>
               <subresults>true</subresults>
               <responseData>false</responseData>
-              <samplerData>true</samplerData>
+              <samplerData>false</samplerData>
               <xml>false</xml>
               <fieldNames>true</fieldNames>
               <responseHeaders>false</responseHeaders>
@@ -442,6 +374,14 @@
           </objProp>
           <stringProp name="filename"></stringProp>
         </ResultCollector>
+        <hashTree/>
+        <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="false">
+          <stringProp name="FileSaver.filename">jmeterResponse_</stringProp>
+          <boolProp name="FileSaver.errorsonly">false</boolProp>
+          <boolProp name="FileSaver.successonly">false</boolProp>
+          <boolProp name="FileSaver.skipsuffix">true</boolProp>
+          <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        </ResultSaver>
         <hashTree/>
         <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -461,7 +401,7 @@
               <assertions>false</assertions>
               <subresults>true</subresults>
               <responseData>false</responseData>
-              <samplerData>true</samplerData>
+              <samplerData>false</samplerData>
               <xml>false</xml>
               <fieldNames>true</fieldNames>
               <responseHeaders>false</responseHeaders>
@@ -491,20 +431,44 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Runtime Controller" enabled="true">
-          <stringProp name="RunTime.seconds">60</stringProp>
-        </RunTime>
-        <hashTree/>
-        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
-          <stringProp name="maximumValue">2</stringProp>
-          <stringProp name="minimumValue">1</stringProp>
-          <stringProp name="outputFormat">0</stringProp>
-          <boolProp name="perThread">true</boolProp>
-          <stringProp name="randomSeed">1234</stringProp>
-          <stringProp name="variableName">randomIndex</stringProp>
-        </RandomVariableConfig>
-        <hashTree/>
       </hashTree>
+      <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

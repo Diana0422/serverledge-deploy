@@ -25,7 +25,7 @@ for entry in os.listdir(DIR):
     # calculate utility and cost
     with open(os.path.join(DIR, f"utilityCostResults_{users}.csv"), "w") as uf:
         print(
-            "TotalRequests,UnderLimitDefault,UnderLimitPremium,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage",
+            "TotalRequests,UnderLimitDefault,UnderLimitPremium,UnderLimitPerc,Utility,Penalty,NetUtility,PerRequestUtility,Cost,DropCount,CompletionPercentage",
             file=uf)
 
         experiment_time = (df.timeStamp.max() - df.timeStamp.min()) / 1000.0
@@ -49,13 +49,13 @@ for entry in os.listdir(DIR):
         for i in range(len(df)):
             if df.loc[i, "responseCode"] == 200:
                 if df.loc[i, "qosClass"] == "default":
-                    if df.loc[i, "elapsed"] <= float('inf'):
+                    if df.loc[i, "elapsed"] <= float("inf"):
                         under_limit_default += 1
                         utility += 0.01
                     else:
                         penalty += 0
                 elif df.loc[i, "qosClass"] == "premium":
-                    if df.loc[i, "elapsed"] <= 3000:
+                    if df.loc[i, "elapsed"] <= 1500:
                         under_limit_premium += 1
                         utility += 1.0
                     else:
@@ -86,8 +86,13 @@ for entry in os.listdir(DIR):
         print(f"$/h: {total_cost}")
         print(f"budget $/h: {0.40}")
 
+        # Calculate under limit percentage
+        under_limit_per = (under_limit_default+under_limit_premium)/total_requests
+        under_limit_premium_per = under_limit_premium/total_requests
+        under_limit_default_per = under_limit_default/total_requests
+
         print(
-            f'{total_requests:.5f},{under_limit_default:.5f},{under_limit_premium:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
+            f'{total_requests:.5f},{under_limit_default_per:.5f},{under_limit_premium_per:.5f},{under_limit_per:.5f},{utility:.5f},{penalty:.5f},{net_utility:.5f},{per_request_utility:.5f},{total_cost:.5f},{drop_count:.5f},{completion_perc:.5f}',
             file=uf)
 
     # calculate function infos
