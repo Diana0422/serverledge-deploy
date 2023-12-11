@@ -238,7 +238,7 @@
     func_runtime_2: custom
     func_image: grussorusso/serverledge-imageclass
 
-    testplan: jmeter/testplanClosed2groups.jmx
+    testplan: jmeter/testplanOpen2groups.jmx
     users: 25
     local_results_file: test_results.csv
     local_responses_file: responses.tar.gz
