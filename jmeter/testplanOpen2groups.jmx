@@ -243,7 +243,7 @@
       <OpenModelThreadGroup guiclass="OpenModelThreadGroupGui" testclass="OpenModelThreadGroup" testname="Open Model Thread Group - Func2" enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="OpenModelThreadGroupController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="OpenModelThreadGroup.schedule">rate(5/sec) random_arrivals(600 sec) rate(5/sec)</stringProp>
+        <stringProp name="OpenModelThreadGroup.schedule">rate(1/sec) random_arrivals(600 sec) rate(1/sec)</stringProp>
       </OpenModelThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
