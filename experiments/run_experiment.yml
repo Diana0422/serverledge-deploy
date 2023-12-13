@@ -233,7 +233,7 @@
 
     # ImageClassification
     func_name_2: ImageClass
-    func_mem_2: 768
+    func_mem_2: 868
     func_cpu_2: 1.0
     func_runtime_2: custom
     func_image: grussorusso/serverledge-imageclass

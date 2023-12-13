@@ -87,7 +87,7 @@
     - sedge_Cloud
   tasks:
     - name: Pull imageClass function image from docker hub
-      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass
+      ansible.builtin.shell: docker image pull grussorusso/serverledge-imageclass:latest
 
 
 - name: Install LB in the Cloud

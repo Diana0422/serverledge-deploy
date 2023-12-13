@@ -13,7 +13,7 @@
       <OpenModelThreadGroup guiclass="OpenModelThreadGroupGui" testclass="OpenModelThreadGroup" testname="Open Model Thread Group - Func1" enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="OpenModelThreadGroupController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="OpenModelThreadGroup.schedule">rate(5/sec) random_arrivals(600 sec) rate(5/sec)</stringProp>
+        <stringProp name="OpenModelThreadGroup.schedule">rate(5/sec) random_arrivals(120 sec) rate(5/sec)</stringProp>
       </OpenModelThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
@@ -23,7 +23,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;Params&quot;: {&quot;n&quot;: 5000},&#xd;
+	&quot;Params&quot;: {&quot;n&quot;: 1000},&#xd;
 	&quot;QoSClass&quot;: &quot;${__V(class${__Random(1,2,)})}&quot;,&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
@@ -243,7 +243,7 @@
       <OpenModelThreadGroup guiclass="OpenModelThreadGroupGui" testclass="OpenModelThreadGroup" testname="Open Model Thread Group - Func2" enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="OpenModelThreadGroupController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="OpenModelThreadGroup.schedule">rate(1/sec) random_arrivals(600 sec) rate(1/sec)</stringProp>
+        <stringProp name="OpenModelThreadGroup.schedule">rate(5/sec) random_arrivals(120 sec) rate(5/sec)</stringProp>
       </OpenModelThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
@@ -253,7 +253,7 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;Params&quot;: {&quot;imgurl&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/6/62/Big_and_little_dog.jpg&quot;},&#xd;
+	&quot;Params&quot;: {&quot;imgurl&quot;: &quot;https://c4.wallpaperflare.com/wallpaper/701/216/855/cat-4k-high-resolution-image-wallpaper-preview.jpg&quot;},&#xd;
 	&quot;QoSClass&quot;: &quot;${__V(class${__Random(1,2,)})}&quot;,&#xd;
 	&quot;CanDoOffloading&quot;: true,&#xd;
 	&quot;Async&quot;: false&#xd;
