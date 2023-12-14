@@ -82,7 +82,7 @@ plt.ylabel('Elapsed (ms)')
 plt.title('Response time comparison between different policies')
 
 # Add a horizontal line to define the response time limit
-plt.axhline(y=200, color='r', linestyle='--', label='Threshold (2000)')
+plt.axhline(y=1000, color='r', linestyle='--', label='Threshold (2000)')
 plt.legend()
 plt.savefig("elapsed_box_plot.svg")
 

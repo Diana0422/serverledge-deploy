@@ -225,7 +225,7 @@
   vars:
     # Fibonacci
     func_name: Fibonacci # must match with the testplan
-    func_mem: 128
+    func_mem: 98
     func_cpu: 0.5
     func_runtime: python310
     func_handler: fibonacci.handler
@@ -233,7 +233,7 @@
 
     # ImageClassification
     func_name_2: ImageClass
-    func_mem_2: 868
+    func_mem_2: 898
     func_cpu_2: 1.0
     func_runtime_2: custom
     func_image: grussorusso/serverledge-imageclass
