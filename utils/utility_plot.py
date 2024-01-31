@@ -50,19 +50,19 @@ def switch(name):
     if name == "QoSAwareEdgeCloud":
         read_values(name)
         if name in utilities.keys():
-            utility_means.update({name: np.mean(utilities.get(name))})
+            utility_means.update({"QoS": np.mean(utilities.get(name))})
     elif name == "QoSAwareCloud":
         read_values(name)
         if name in utilities.keys():
-            utility_means.update({name: np.mean(utilities.get(name))})
+            utility_means.update({"QoSC": np.mean(utilities.get(name))})
     elif name == "Baseline":
         read_values(name)
         if name in utilities.keys():
-            utility_means.update({name: np.mean(utilities.get(name))})
+            utility_means.update({"Bc": np.mean(utilities.get(name))})
     elif name == "MinR":
         read_values(name)
         if name in utilities.keys():
-            utility_means.update({name: np.mean(utilities.get(name))})
+            utility_means.update({"minR": np.mean(utilities.get(name))})
 
 
 # populate utilities

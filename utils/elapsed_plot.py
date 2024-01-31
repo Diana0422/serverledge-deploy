@@ -6,22 +6,42 @@ import pandas as pd
 import numpy as np
 
 DIR = sys.argv[1] if len(sys.argv) > 1 else "."
+LANG = sys.argv[2] if len(sys.argv) > 2 else "ENG"
+# ITA = italiano
+# ENG = english
 
 print(os.listdir(DIR))
 
 # Creare un unico set di assi
-fig, ax = plt.subplots(figsize=(12, 6))
-plt.title("Response Time Comparison")
+fig, ax = plt.subplots(figsize=(8, 4))
 
 policies = ['QoSAware - EdgeCloud', 'QoSAware - CloudOnly', 'Basic', 'MinR']
+policy_order = ["Baseline", "MinR", "QoSAwareCloud", "QoSAwareEdgeCloud"]
 mean_elapsed = {}
 original_values = {}
 min_vals = {}
 bar_labels = ['red', 'blue']
 bar_colors = ['tab:red', 'tab:blue']
+COLOR2 = "#b0ceff"
+COLOR2b = "#003180"
 
 
-def read_values(name) -> pd.DataFrame:
+def policies_tiny_names(dict_policy_keys):
+    policy_list = list(dict_policy_keys)
+    ret = []
+    for policy in policy_list:
+        if policy == "Baseline":
+            ret.append("Bc")
+        elif policy == "MinR":
+            ret.append("minR")
+        elif policy == "QoSAwareCloud":
+            ret.append("QoSC")
+        elif policy == "QoSAwareEdgeCloud":
+            ret.append("QoS")
+    return ret
+
+
+def read_values(name):
     path = DIR + "/" + name
     for usersDir in os.listdir(path):
         print(f"usersDir: {usersDir}")
@@ -37,13 +57,13 @@ def read_values(name) -> pd.DataFrame:
             ok = f[(f.responseCode == 200) & (f.qosClass == "premium")]
 
             if name not in original_values.keys():
-                original_values.update({name: [ok.elapsed]})
+                original_values.update({name: [ok.elapsed / 1000]})
             else:
                 old_values = original_values.get(name)
-                old_values.append(ok.elapsed)
+                old_values.append(ok.elapsed / 1000)
                 original_values.update({name: old_values})
 
-            mean = np.mean(ok.elapsed)
+            mean = np.mean(ok.elapsed / 1000)
             if name not in mean_elapsed.keys():
                 mean_elapsed.update({name: [mean]})
             else:
@@ -69,20 +89,35 @@ for entry in os.listdir(DIR):
     print(f"min_vals: {min_vals}")
 
 
+def get_plot_data(d: dict):
+    ordered_data = {k: d[k] for k in policy_order if k in d}
+    return ordered_data
+
+
 # Create boxplot
-keys = list(min_vals.keys())
-data = list(min_vals.values())
+dict_data = get_plot_data(min_vals)
+print(dict_data.keys())
+keys = list(dict_data.keys())
+data = list(dict_data.values())
 
 # Crea un box plot per ogni chiave
-plt.boxplot(data, labels=keys, showfliers=False)
+bp = ax.boxplot(data, labels=policies_tiny_names(keys), showfliers=False)
 
 # Add labels and title to the plot
-plt.xlabel('Policies')
-plt.ylabel('Elapsed (ms)')
-plt.title('Response time comparison between different policies')
+if LANG == "ITA":
+    plt.xlabel('Politica')
+    plt.ylabel('Tempo di Risposta (s)')
+else:
+    plt.xlabel('Policy')
+    plt.ylabel('Response Time (s)')
 
 # Add a horizontal line to define the response time limit
-plt.axhline(y=1000, color='r', linestyle='--', label='Threshold (2000)')
+if LANG == "ITA":
+    plt.axhline(y=0.8, color='r', linestyle='--', label='Tempo Max. Risposta (utenti Premium)')
+else:
+    plt.axhline(y=0.8, color='r', linestyle='--', label='Max. Resp. Time (Premium users)')
+# adding horizontal grid lines
+ax.yaxis.grid(True)
 plt.legend()
 plt.savefig("elapsed_box_plot.svg")
 
